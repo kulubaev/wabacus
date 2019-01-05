@@ -1,0 +1,58 @@
+class Pipeline {
+
+  constructor(socket) {
+    this.socket = socket;
+
+    this.inbound = [];
+    this.outbound = [];
+
+    socket.on('message', (data) => {
+      this.execute( this.inbound, { data });
+    });
+
+  }
+
+  send(data) {
+    this.execute(this.outbound, { data }, () => {
+      this.socket.send(data);
+    });
+
+  }
+
+  use({inbound, outbound}) {
+    if(inbound) {
+      this.inbound.push(inbound);
+    }
+
+    if(outbound)
+      this.outbound.unshift(outbound);
+  }
+
+  execute(middleware, params, onDone) {
+
+    const iterator = (index) => {
+      if(index === middleware.length) {
+        return onDone && onDone();
+      }
+
+      middleware[index].call(this,params, (error) => {
+
+        if(error) {
+          return;
+        }
+
+        iterator.call(this, ++index);
+
+      });
+
+
+      iterator.call(this, 0);
+
+    }
+
+  }
+
+}
+
+exports.Pipeline = Pipeline;
+
