@@ -1,15 +1,19 @@
 {
-
   "name": "megasoft-core",
   "author": "kulubaev",
   "dependencies": {
-
+    "redis": "^2.8.0",
+    "zeromq": "^5.1.0"
   },
-
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "jest": "^23.6.0",
+    "jsdoc": "^3.5.5",
+    "nodemon": "^1.18.9"
+  },
   "scripts": {
-
+    "start-dev": "nodemon",
+    "start": "node index.js",
+    "test": "jest"
   }
-
-
-
 }
