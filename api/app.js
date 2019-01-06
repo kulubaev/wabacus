@@ -1,28 +1,20 @@
 const express = require('express');
-const zmq = require('zeromq');
-const { Pipeline, jsonMiddleware, config } = require('megasoft-shared');
+const cors = require('cors');
+const calculate = require('./routes/arithmetic');
 
-const { port, host } = config;
+const app = express();
 
-console.log(host, port);
-console.log(`${host}:${port}`);
 
-const channel = zmq.socket('req');
-channel.connect(`${host}:${port}`);
+app.use("/", calculate);
 
-console.log(Pipeline);
 
-const pipeline = new Pipeline(channel);
+app.listen(3000, () => {
 
-pipeline.use(jsonMiddleware());
-pipeline.use({
-  inbound:(message, next) => {
-    console.log('echoing:' + message.data)
-  }
+  console.log('up and running at port 3000');
+
 });
 
 
 
 
 
-module.exports = zmq;

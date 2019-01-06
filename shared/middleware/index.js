@@ -6,15 +6,16 @@ class Pipeline {
     this.inbound = [];
     this.outbound = [];
 
-    socket.on('message', (data) => {
-      this.execute( this.inbound, { data });
+    socket.on('message', (message) => {
+      this.execute(this.inbound,{data: message});
     });
 
   }
 
   send(data) {
-    this.execute(this.outbound, { data }, () => {
-      this.socket.send(data);
+    const message = {data};
+    this.execute(this.outbound,  message , () => {
+      this.socket.send(message.data);
     });
 
   }
@@ -31,28 +32,29 @@ class Pipeline {
   execute(middleware, params, onDone) {
 
     const iterator = (index) => {
+
       if(index === middleware.length) {
         return onDone && onDone();
       }
 
-      middleware[index].call(this,params, (error) => {
+
+      middleware[index].call(this, params, (error) => {
 
         if(error) {
+          console.log('error ' + error);
           return;
         }
 
         iterator.call(this, ++index);
 
       });
-
-
-      iterator.call(this, 0);
-
     }
+
+    iterator.call(this, 0);
 
   }
 
 }
 
-exports.Pipeline = Pipeline;
+module.exports = Pipeline;
 

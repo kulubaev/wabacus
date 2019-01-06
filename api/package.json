@@ -2,8 +2,10 @@
   "name": "megasoft-api",
   "author": "kulubaev",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "redis": "^2.8.0",
+    "uuid": "^3.3.2",
     "zeromq": "^5.1.0"
   },
   "devDependencies": {
