@@ -4,7 +4,7 @@ const {
   DIVIDE,
   PRODUCT,
   DIVISION_BY_ZERO_ENCOUNTERED
-} = require('./constants');
+} = require('megasoft-shared');
 
 /**
  *@description routine defintions for basic/primary calculations
@@ -13,7 +13,9 @@ const {
  *@param {number} y - argument 
  */
 
-const sum = ({x, y}) => x + y;
+const sum = ({x, y}) =>{ 
+  return x + y;
+}
 const subtract = ({x, y}) => x - y;
 const product = ({x, y}) => x * y;
 

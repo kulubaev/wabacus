@@ -1,8 +1,9 @@
 
 const redis = require('redis');
+const zmq = require('zeromq');
 
-const { Pipeline, JsonMiddleware }  = require('megasoft-shared');
-const { host, port } = require('./.env');
+const { Pipeline, jsonMiddleware, config, constants }  = require('megasoft-shared');
+const { host, port } = config; 
 
 /**
  *@description importing arithmetic operation related constants
@@ -13,7 +14,11 @@ const {
   PRODUCT,
   SUM,
   DEDUCT,
-} = require('./arithmethics/constants');
+  FACTORIAL,
+  CUBE_ROOT,
+  SQUARE_ROOT,
+  POWER
+} = constants; 
 
 /**
  *@description importing arithmetic opreations
@@ -21,6 +26,12 @@ const {
  */
 
 const {
+
+
+  subtract,
+  product,
+  divide,
+  sum,
   power,
   squareRoot,
   cubeRoot,
@@ -36,21 +47,28 @@ const {
  * @param {number} retry_strategy - the number in ms to retry in case of ordeal
  */
 
+/*
 const cache = redis.createClient({
   host,
   port
 });
-
+*/
 
 /**
  *@description  per redis requirement we need to use two distinct instances ala subsctiption, operations.
  *
  */
+/*
 const  subscription  = cache.duplicate(); 
 
 
-const pipeline = new Pipeline(subscription);
-pipeline.use(JsonMiddleware());
+*/
+
+const channel = zmq.socket('rep');
+channel.bind(`${host}:${port}`);
+
+const pipeline = new Pipeline(channel);
+pipeline.use(jsonMiddleware());
 
 pipeline.use({
   inbound: (message, next) => {
@@ -61,26 +79,51 @@ pipeline.use({
      * @param {string} message - message body 
      */
 
-    switch(channel) {
-      case SUM:
-        cache.hset(channel, message, sum(message), cache.print );
+    const { id, op, x } = message.data;
+    let result;
+
+    try{
+      switch(op) {
+        case SUM:
+         pipeline.send({...message.data, result: sum({x: parseInt(x), y: parseInt(message.data.y)}), success:true});
         break;
 
-      case SUBTRACT:
-        const { x, y } = JSON.parse(message);
-        cache.hset(channel, message, subtract(message), cache.print );
-        break;
+        case DIVIDE:
+          pipeline.send({...message.data, result: divide({x: parseInt(x), y: parseInt(message.data.y)}), success:true});
+          break;
 
-      case DIVIDE:
-        const { x, y } = JSON.parse(message);
-        cache.hset(channel, message, divide(message), cache.print );
-        break;
+        case PRODUCT:
+          pipeline.send({...message.data, result: product({x: parseInt(x), y: parseInt(message.data.y)}), success:true});
+          break;
 
-      case PRODUCT:
-        const { x, y } = JSON.parse(message);
-        cache.hset(channel, message, product(message), cache.print );
-        break;
+        case DEDUCT:
+          pipeline.send({...message.data, result: subtract({x: parseInt(x), y: parseInt(message.data.y)}), success:true});
+          break;
+
+        case POWER:
+          pipeline.send({...message.data, result: power({x: parseInt(x), n: parseInt(message.data.n)}), success:true});
+          break;
+
+        case FACTORIAL:
+          pipeline.send({...message.data, result: factorial({x: parseInt(x)}), success:true});
+          break;
+
+        case SQUARE_ROOT:
+          pipeline.send({...message.data, result: squareRoot({x: parseInt(x)}), success:true});
+          break;
+
+        case CUBE_ROOT:
+          pipeline.send({...message.data, result: cubeRoot({x: parseInt(x)}), success:true});
+          break;
+
+        default:
+          pipeline.send({...message.data, success:false, error: 'given arithmetical operation can not be recongnized'});
+      }
     }
+
+    catch(error) {
+      pipeline.send({...message.data, success:false, error});
+    };
 
     next();
   }
@@ -90,9 +133,11 @@ pipeline.use({
  *@description subscribe to listen any event when a new entry will be added to redis
  *@param {strind} 'insert' - name of new value added event
  */
+/*
 subscription.subscribe(
   SUM, 
   DIVIDE, 
   SUBTRACT,
   PRODUCT
 );
+*/

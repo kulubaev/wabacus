@@ -7,11 +7,11 @@ const json = () => {
     },
 
     outbound: (message, next)  => {
-      message.data = new Buffer(JSON.stringify(message.data));
+      message.data = Buffer.from(JSON.stringify(message.data));
       next();
     }
   }
 
 }
 
-exports.JsonMiddleware = json;
+module.exports = json;
