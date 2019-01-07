@@ -1,0 +1,34 @@
+version: '3'
+services: 
+  postgres:
+    image: 'postgres:latest'
+  api:
+    build:
+      dockerfile: Dockerfile-dev
+      context: ./api
+    volumes:
+      - /app/node_modules
+      - ./api:/app
+    environment:
+      - DBHOST=store
+      - DBUSER=postgress
+      - DBPASSWORD=postgress_password
+      - DBPORT=6379
+      - DBNAME=postgres
+      - MQHOST=tcp://127.0.0.1
+      - MQPORT=5000
+  core:
+    build:
+      dockerfile: Dockerfile-dev
+      context: ./core
+    volumes:
+      - /app/node_modules
+      - ./core:/app
+    environment:
+      - MQHOST=zmq
+      - MQPORT=5000
+
+
+
+    
+

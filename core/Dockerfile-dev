@@ -1,0 +1,12 @@
+FROM lgatica/node-zmq:onbuild
+WORKDIR '/app'
+RUN apk add --no-cache --virtual .gyp \
+        python \
+        make \
+        g++ \
+    && apk del .gyp
+COPY ./package.json /.
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm", "run", "start-dev"]

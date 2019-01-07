@@ -7,10 +7,10 @@ const {
   routeMiddleware,
   config } = require('megasoft-shared');
 
-const { port, host } = config;
+const { zmqPort, zmqHost } = config;
 
 const channel = zmq.socket('req');
-channel.connect(`${host}:${port}`);
+channel.connect(`${zmqHost}:${zmqPort}`);
 
 
 const pipeline = new Pipeline(channel);
