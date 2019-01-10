@@ -7,6 +7,7 @@ const { zmqPort, zmqHost } = config;
  *@description importing arithmetic operation related constants
  *
  */
+
 const {
   DIVIDE,
   PRODUCT,
@@ -83,6 +84,7 @@ pipeline.use({
     try{
       switch(op) {
         case SUM:
+     
          pipeline.send({...message.data, result: sum({x: parseInt(x), y: parseInt(message.data.y)}), success:true});
         break;
 

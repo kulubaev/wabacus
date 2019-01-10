@@ -1,4 +1,15 @@
-const arithmetic_expression_build =({op, num1, num2, exp, result}) => {
+const {
+  SUM, 
+  DIVIDE,
+  DEDUCT,
+  PRODUCT,
+  FACTORIAL,
+  CUBE_ROOT,
+  SQUARE_ROOT,
+  POWER
+} = require('../constants');
+
+const arithmetic_expression_build =({op, x, y, n, exp, result}) => {
   switch(op) {
     case SUM: return `${x} + ${y} = ${result}`;
     case DIVIDE: return `${x} / ${y} = ${result}`;

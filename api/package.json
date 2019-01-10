@@ -4,9 +4,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "megasoft-shared": "git+https://git@github.com/kulubaev/calcuco-shared.git",
     "pg": "^7.7.1",
-    "uuid": "^3.3.2",
-    "zeromq": "^5.1.0"
+    "zeromq": "*"
   },
   "devDependencies": {
     "apidoc": "^0.17.7",

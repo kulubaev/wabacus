@@ -19,7 +19,7 @@ const api = express.Router();
 
 api.get(/^\/power\/(\d+)\/(\d+)$/, (req, res) => {
   const id = uuid();
-  const payload = {id, x: req.params[1], n: req.params[2]};
+  const payload = {id, x: req.params[0], n: req.params[1], op: POWER};
 
   new Promise((resolve, reject) => {
     cache[id] = ({ error, success, result, x, n, op }) => success ? resolve({result, num: x, power: n, operation:op}) : reject(error);

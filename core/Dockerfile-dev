@@ -1,12 +1,16 @@
-FROM lgatica/node-zmq:onbuild
+FROM shnoby/node-zeromq 
 WORKDIR '/app'
-RUN apk add --no-cache --virtual .gyp \
-        python \
-        make \
-        g++ \
-    && apk del .gyp
-COPY ./package.json /.
-RUN npm install
+
+COPY ./package.json ./
+
+RUN  npm install 
+
 COPY . .
+
+#ENV MQHOST=tcp://127.0.0.1
+#ENV MQPORT=5000
+ 
+EXPOSE 5432
 EXPOSE 5000
-CMD ["npm", "run", "start-dev"]
+
+CMD ["node",  "index.js"]

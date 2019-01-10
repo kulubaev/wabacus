@@ -10,13 +10,15 @@ services:
       - /app/node_modules
       - ./api:/app
     environment:
-      - DBHOST=store
-      - DBUSER=postgress
-      - DBPASSWORD=postgress_password
-      - DBPORT=6379
+      - DBHOST=postgres
+      - DBUSER=postgres
+      - DBPASSWORD=postgres_password
+      - DBPORT=5432
       - DBNAME=postgres
-      - MQHOST=tcp://127.0.0.1
+      - MQHOST=tcp://core
       - MQPORT=5000
+    ports:
+      - '3000:3000'
   core:
     build:
       dockerfile: Dockerfile-dev
@@ -25,10 +27,12 @@ services:
       - /app/node_modules
       - ./core:/app
     environment:
-      - MQHOST=zmq
+      - DBHOST=postgres
+      - DBUSER=postgres
+      - DBPASSWORD=postgres_password
+      - DBPORT=5432
+      - DBNAME=postgres
+      - MQHOST=tcp://*
       - MQPORT=5000
-
-
-
     
 

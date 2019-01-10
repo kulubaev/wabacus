@@ -1,8 +1,6 @@
 {
   "dependencies": {
-    "zeromq": "^5.1.0"
-  },
-  "scripts":{
-    "node": "node"
+    "zeromq": "*",
+    "uuid": "*"
   }
 }

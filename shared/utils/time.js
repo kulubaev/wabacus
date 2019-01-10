@@ -9,8 +9,6 @@ Date.prototype.addDays = function(days){
   return date;
 }
 
-
-
 Date.prototype.shorten = function(){
 
   const date = new Date(this.toLocaleDateString());
