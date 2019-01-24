@@ -6,11 +6,12 @@ const { Pool } = require('pg');
 
 const {
   pgHost:host,
-  pgDtabase: database,
+  pgDatabase: database,
   pgUser: user,
   pgPort: port,
   pgPassword: password
 } = config;
+
 
 const store = new Pool({
   host,
@@ -20,9 +21,11 @@ const store = new Pool({
   port
 });
 
-const errorHandler = (error) => console.log(error);
+const errorHandler = (error) => {
+  console.log(error);
+};
 
-store.on('error', (error) => { });
+store.on('error', (error) => console.log(error));
 
 store.query(`CREATE TABLE IF NOT EXISTS operations (
   id varchar(50) PRIMARY KEY,
@@ -31,26 +34,29 @@ store.query(`CREATE TABLE IF NOT EXISTS operations (
   status varchar(10)  NOT NULL,
   created timestamp NOT NULL
 )`)
-  .catch((error) =>  errorHandler(error) );
+  .catch((error) =>  {
+
+
+  });
 
 
 const run = (sql) => {
- store.query(sql)
+
+ return store.query(sql)
   .catch((error) => errorHandler(error));
 }
 
-const insertRow = ({id, op, x, y, n ,result, success}) => {
+const insertRow = ({data: {id, op, x, y, n ,result, success}}) => {
 
   const expression = arithmetic_expression_build({ op, x, y, n, result });
-
   const queryTxt = 'INSERT INTO operations(id, type, expression, status, created ) VALUES($1, $2, $3, $4, $5 )';
 
-  store.query(queryTxt, [ id, op, expression, success ? 'success' : 'failed' ], new Date())
-    .catch(error => errorHandler(error))
+  return store.query(queryTxt, [ id, op, expression, success ? 'success' : 'failed' ,(new Date()).shorten()])
+    .catch((error) => errorHandler)
 }
 
 const queryBetween = (start, end) => {
-  const sql = `SELECT * FROM operations WHERE created::date >= ${start.shorten()} AND created::date <= ${start.shorten()}`;
+  const sql = `SELECT * FROM operations WHERE created::date >= '${start.shorten()}' AND created::date <= '${start.shorten()}'`;
   return run(sql);
 }
 
@@ -77,9 +83,7 @@ const queryWeekly = () => {
   return queryBetween(today.getFirstDayOfWeek(), getLastDayOfWeek());
 }
 
-
-
-module.exports = store;
+exports.pool = store;
 exports.queryAll= queryAll;
 exports.queryDaily= queryDaily;
 exports.queryWeekly= queryWeekly;

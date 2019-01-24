@@ -1,14 +1,13 @@
 
-const redis = require('redis');
 const zmq = require('zeromq');
 
 const { Pipeline, jsonMiddleware, config, constants }  = require('megasoft-shared');
-const { host, port } = config; 
-
+const { zmqPort, zmqHost } = config;
 /**
  *@description importing arithmetic operation related constants
  *
  */
+
 const {
   DIVIDE,
   PRODUCT,
@@ -65,7 +64,7 @@ const  subscription  = cache.duplicate();
 */
 
 const channel = zmq.socket('rep');
-channel.bind(`${host}:${port}`);
+channel.bind(`${zmqHost}:${zmqPort}`);
 
 const pipeline = new Pipeline(channel);
 pipeline.use(jsonMiddleware());
@@ -85,6 +84,7 @@ pipeline.use({
     try{
       switch(op) {
         case SUM:
+     
          pipeline.send({...message.data, result: sum({x: parseInt(x), y: parseInt(message.data.y)}), success:true});
         break;
 

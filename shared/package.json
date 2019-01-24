@@ -1,7 +1,6 @@
 {
   "name": "megasoft-shared",
   "version": " 0.0.1",
-  "private": true,
   "author": "kulubaev",
   "dependencies": {
     "jest": "^23.6.0",

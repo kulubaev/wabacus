@@ -2,8 +2,8 @@
   "name": "megasoft-core",
   "author": "kulubaev",
   "dependencies": {
-    "redis": "^2.8.0",
-    "zeromq": "^5.1.0"
+    "megasoft-shared": "git+https://git@github.com/kulubaev/calcuco-shared.git",
+    "zeromq": "*"
   },
   "devDependencies": {
     "eslint": "^5.11.1",
