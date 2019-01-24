@@ -1,4 +1,5 @@
 module.exports = {
+  PAGE_SIZE: 15,
   PRODUCT: 'multiplication',
   DIVIDE: 'division',
   SUM: 'addition',

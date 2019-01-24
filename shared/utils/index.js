@@ -1,2 +1,8 @@
-exports = require('./txt-manage');
-exports = require('./time');
+const txtmanage =  require('./txt-manage');
+const timemanage = require('./time');
+
+
+module.exports = {
+  txtmanage,
+  timemanage
+}

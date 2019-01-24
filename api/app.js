@@ -7,11 +7,13 @@ const reports = require('./routes/reports');
 
 const app = express();
 
+app.use(cors());
 app.use(parser.json());
 
 
+
 app.use("/", calculate);
-app.use("/operations", reports);
+app.use("/chrono", reports);
 
 
 app.listen(3000, () => {

@@ -1,0 +1,108 @@
+.ops {
+  &-container{
+    display: block;
+    position:relative;
+    text-decoration: none;
+    color: #000;
+    width: 95%;
+    height: 100%;
+  }
+
+  &-list {
+   justif-items: center;
+    align-items: center;
+    border-bottom: 1px dotted #FEC726;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    height: 70%;
+  }
+
+  &-date {
+    grid-column: 4 /  5 ;
+  }
+
+  &-operation {
+    grid-column: 1 / 2;
+  }
+
+
+  &-params {
+    grid-column: 2  / 3 ;
+  }
+
+  &-result {
+    grid-column: 3  / 4 ;
+  }
+
+
+
+  &-line {
+    background: url(../assets/arrow.gif) no-repeat left 5px;
+    padding-left: 20px;
+    display: block;
+    width:100%;
+    margin-top: 30px;
+  }
+
+  &-header{
+    border-bottom: 1px dotted #FEC726;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: top;
+    font-size: 0.9rem; 
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  &-middle {
+    display: flex;
+    justify-content: center;
+  }
+
+  &-entry {
+    &-header {
+      font-weight: 600;
+    }
+    display: grid;
+    grid-template-columns: 25% 30% 25% 20%;
+    justify-content: center;
+    align-items: center;
+    height:1.3rem;
+    font-size: 0.7rem; 
+    width: 100%;
+
+  }
+
+  &-pagination {
+    position: absolute;
+    bottom: 0px;
+    left: 40%;
+  }
+  &-page {
+    width: 10px;
+    height: 20px;
+    margin: 10px;
+    padding:  5px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  &-pager {
+    width: 50px;
+    height: 20px;
+    margin: 10px;
+    padding: 5px;
+    display: inline-block;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #FEC726;
+    font-size: 80%;
+    cursor: pointer;
+  }
+
+}

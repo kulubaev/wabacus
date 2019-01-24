@@ -17,12 +17,12 @@ const {
 
 const api = express.Router();
 
-api.get(/^\/power\/(\d+)\/(\d+)$/, (req, res) => {
+api.get(/^\/power\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?)\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?)$/, (req, res) => {
   const id = uuid();
   const payload = {id, x: req.params[0], n: req.params[1], op: POWER};
 
   new Promise((resolve, reject) => {
-    cache[id] = ({ error, success, result, x, n, op }) => success ? resolve({result, num: x, power: n, operation:op}) : reject(error);
+    cache[id] = ({ error, success, result, x, n, op, expression, date }) => success ? resolve({result, num1: x, power: n, operation:op, expression, date}) : reject(error);
   })
     .then((result) => {
       res.status(200).json(result);
@@ -35,23 +35,16 @@ api.get(/^\/power\/(\d+)\/(\d+)$/, (req, res) => {
 })
 
 
-api.get(/^\/(factorial|cuberoot|squareroot)\/(\d+)$/, (req, res) => {
-
+api.get(/^\/factorial\/(\d+)$/, (req, res) => {
   const id = uuid();
-  const payload = {id, x: req.params[1]};
+  const payload = {id, x: req.params[0], op: FACTORIAL};
 
-  payload.op = ((op) => {
-    switch(op) {
-      case 'factorial': return FACTORIAL;
-      case 'cuberoot': return CUBE_ROOT;
-      case 'squareroot': return SQUARE_ROOT;
-      default: return op;
-    }
-  })(req.params[0]);
-
+  if(payload.x > 30)  {
+    payload.x = 30;
+  }
 
   new Promise((resolve, reject) => {
-    cache[id] = ({ error, success, result, x, y, op }) => success ? resolve({result, num: x, operation:op}) : reject(error);
+    cache[id] = ({ error, success, result, x, y, op, expression, date }) => success ? resolve({result, num1: x, operation:op, expression, date}) : reject(error);
   })
     .then((result) => {
       res.status(200).json(result);
@@ -63,8 +56,34 @@ api.get(/^\/(factorial|cuberoot|squareroot)\/(\d+)$/, (req, res) => {
   pipeline.send(payload);
 });
 
+api.get(/^\/(factorial|cbrt|sqrt)\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?)$/, (req, res) => {
 
-api.get(/^\/(add|divide|subtract|multiply)\/(\d+)\/(\d+)$/, (req, res) => {
+  const id = uuid();
+  const payload = {id, x: req.params[1]};
+
+  payload.op = ((op) => {
+    switch(op) {
+      case 'cbrt': return CUBE_ROOT;
+      case 'sqrt': return SQUARE_ROOT;
+      default: return op;
+    }
+  })(req.params[0]);
+
+
+  new Promise((resolve, reject) => {
+    cache[id] = ({ error, success, result, x, y, op, expression, date }) => success ? resolve({result, num1: x, operation:op, expression, date}) : reject(error);
+  })
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({error:'something went wrong'});
+    })
+
+  pipeline.send(payload);
+});
+
+api.get(/^\/(add|divide|subtract|multiply)\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?)\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?)$/, (req, res) => {
 
   const id = uuid();
   const payload = {id, x: req.params[1], y: req.params[2]};
@@ -80,11 +99,11 @@ api.get(/^\/(add|divide|subtract|multiply)\/(\d+)\/(\d+)$/, (req, res) => {
     }
   })(req.params[0]);
 
-
   new Promise((resolve, reject) => {
-    cache[id] = ({ error, success, result, x, y, op }) => success ? resolve({result, num1: x, num2:y, operation:op}) : reject(error);
+    cache[id] = ({ error, success, result, x, y, op, expression, date }) => success ? resolve({result, num1: x, num2:y, operation:op, expression, date}) : reject(error);
   })
     .then((result) => {
+      console.log(result);
       res.status(200).json(result);
     })
     .catch((error) => {

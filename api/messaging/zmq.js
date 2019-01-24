@@ -26,8 +26,6 @@ pipeline.use(routeMiddleware(cache));
 pipeline.use(persistMiddleware(store));
 
 
-
-
 exports.pipeline = pipeline;
 exports.cache = cache;
 exports.zmq = zmq;
