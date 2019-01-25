@@ -80,10 +80,9 @@ pipeline.use({
      */
 
     const { id, op, x } = message.data;
+    let result;
 
     try{
-
-    let result;
       switch(op) {
         case SUM:
           result = sum({x: parseFloat(x), y: parseFloat(message.data.y)});
@@ -123,8 +122,8 @@ pipeline.use({
       }
 
       if(result) {
-        console.log(result);
-        const { op, x, y, n } = message.data;
+        console.log(resutl);
+        const { op, x, y, n , result } = message.data;
         const expression = txtmanage({ op, x, y, n, result });
         pipeline.send({...message.data, result , success:true, expression, date : (new Date()).shorten()});
       }
@@ -133,7 +132,6 @@ pipeline.use({
 
 
     catch(error) {
-      console.log(error);
       pipeline.send({...message.data, success:false, error});
     };
 

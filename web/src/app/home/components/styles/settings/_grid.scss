@@ -1,0 +1,97 @@
+
+//variables
+//---------------------
+$gutter: 15px;
+
+$breakpoints: (
+	small:  768px,
+	medium: 1020px,
+	large:  1200px
+);
+
+//-------------------------------------------------------------------------------------------------------
+//  3 column canonical responsive grid
+//-------------------------------------------------------------------------------------------------------
+
+
+//-------------------------------------------------------
+// small screen layout settings
+//-------------------------------------------------------
+
+.grid-3column {
+	height: 100vh;
+	display: grid;
+	grid-template-rows: 50px 50px 1fr 30px;
+	grid-template-areas:
+	"header"
+	"aside"
+	"main"
+	"footer"
+}
+
+//-------------------------------------------------------
+// medium screen layout settings
+//-------------------------------------------------------
+
+@media only screen and (min-width: map-get($breakpoints, medium)) {
+	.grid-3column {
+		grid-template-columns: 1fr 200px;
+		grid-template-rows: 100px 1fr 30px;
+		grid-template-areas:
+		"header header"
+		"main aside"
+		"footer footer"
+	}
+}
+
+//-------------------------------------------------------
+// large screen layout settings
+//-------------------------------------------------------
+
+@media only screen and (min-width: map-get($breakpoints, large)) {
+	.grid-3column {
+		grid-template-columns: 1fr 1fr 200px;
+		grid-template-rows: 100px 1fr 30px;
+		grid-template-areas:
+		"header header header"
+		"main  main aside"
+		"footer footer footer"
+	}
+}
+
+//-------------------------------------------------------------------------------------------------------
+//  fixed centered responsive grid
+//-------------------------------------------------------------------------------------------------------
+
+
+//-------------------------------------------------------
+// small screen layout settings
+//-------------------------------------------------------
+
+.grid-centered {
+	display: grid;
+	grid-template-rows: 100px 300px 750px 30px auto auto;
+	grid-template-areas:
+	"header"
+	"aside"
+	"main"
+	"footer"
+	"left"
+	"right"
+
+}
+
+
+@media only screen and (min-width: map-get($breakpoints, medium)) {
+	.grid-centered {
+		display: grid;
+		grid-template-columns: auto 570px 470px auto;
+		grid-template-rows: 100px 550px 50px;
+
+		grid-template-areas:
+		"header header header header"
+		"left main aside right"
+		"left footer footer right"
+	}
+}
+																																																							

@@ -7,8 +7,9 @@ const { config, store }  = require('megasoft-shared');
 const api = express.Router();
 const { pg:db } = store;
 
-api.get('/all', async(req, res) =>  { 
-  const all =  await db.queryAll();
+api.get(/\/all\/(\d+)$/, async(req, res) =>  { 
+  console.log(req.params[0])
+  const all =  await db.queryAll(req.params[0]);
   res.status(200).send(all.rows);
 
 })

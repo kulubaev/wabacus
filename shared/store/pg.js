@@ -1,6 +1,8 @@
 
 const config = require('../.env');
-const { arithmetic_expression_build } = require('../utils/txt-manage');
+const constants = require('../constants');
+
+const { PAGE_SIZE } = constants;
 
 const { Pool } = require('pg');
 
@@ -28,9 +30,11 @@ const errorHandler = (error) => {
 store.on('error', (error) => console.log(error));
 
 store.query(`CREATE TABLE IF NOT EXISTS operations (
-  id varchar(50) PRIMARY KEY,
+  id   serial PRIMARY KEY, 
+  uuid varchar(50) NOT NULL, 
   expression  varchar(300) NOT NULL,
-  type varchar(20) NOT NULL,
+  operation varchar(20) NOT NULL,
+  result varchar(20) NOT NULL,
   status varchar(10)  NOT NULL,
   created timestamp NOT NULL
 )`)
@@ -41,17 +45,15 @@ store.query(`CREATE TABLE IF NOT EXISTS operations (
 
 
 const run = (sql) => {
-
  return store.query(sql)
   .catch((error) => errorHandler(error));
 }
 
-const insertRow = ({data: {id, op, x, y, n ,result, success}}) => {
+const insertRow = ({data: {id, op, x, y, n ,result,  expression, success, date}}) => {
 
-  const expression = arithmetic_expression_build({ op, x, y, n, result });
-  const queryTxt = 'INSERT INTO operations(id, type, expression, status, created ) VALUES($1, $2, $3, $4, $5 )';
+  const queryTxt = 'INSERT INTO operations(uuid,  expression, operation,  result, status,  created ) VALUES($1, $2, $3, $4, $5 )';
 
-  return store.query(queryTxt, [ id, op, expression, success ? 'success' : 'failed' ,(new Date()).shorten()])
+  return store.query(queryTxt, [ uuid, expression, op,  result,  success ? 'success' : 'failed' ,date])
     .catch((error) => errorHandler)
 }
 
@@ -61,8 +63,9 @@ const queryBetween = (start, end) => {
 }
 
 
-const queryAll = () => {
-  const sql = `SELECT * FROM operations`; 
+const queryAll = (page) => {
+  
+  const sql = `SELECT *, created as date FROM operations limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE} ORDER BY id DESC`; 
 
   return run(sql);
 }

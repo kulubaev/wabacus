@@ -1,0 +1,9 @@
+export const UPDATE = 'update infix';
+export const OVERRIDE = 'override infix';
+export const RESET = 'reset infix';
+export const SET_HISTORY = 'set history';
+export const SET_EDIT_MODE = 'set edit mode';
+export const ADD_OPERATION = 'add new operation';
+export const LOAD_OPERATIONS_FOR_WEEK = 'add operations for week';
+export const LOAD_OPERATIONS_FOR_DAY = 'add operations for day';
+export const LOAD_OPERATIONS_FOR_MONTH = 'add operations for month';
