@@ -1,0 +1,30 @@
+sudo: required
+services: 
+  - docker
+
+
+before_install:
+  - docker build -t shnoby/web-test -f ./web/Dockerfile-dev ./web
+
+
+script:
+  - docker run shnoby/web-test npm test -- --coverage
+
+
+after_success:
+  - docker build -t shnoby/calcul-web ./web
+  - docker build -t shnoby/calcul-nginx ./nginx
+  - docker build -t shnoby/calcul-worker ./core
+  - docker build -t shnoby/calcul-api ./api
+  #login to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #push to the docker hub
+  - docker push shnoby/calcul-web
+  - docker push shnoby/calcul-nginx
+  - docker push shnoby/calcul-worker
+  - docker push shnoby/calcul-api
+
+
+
+
+
