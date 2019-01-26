@@ -8,5 +8,9 @@ module.exports = {
   CUBE_ROOT: 'cubicroot',
   SQUARE_ROOT: 'squareroot',
   POWER: 'power',
-  DIVISION_BY_ZERO_ENCOUNTERED: 'division by zero encountered'
+  DIVISION_BY_ZERO_ENCOUNTERED: 'division by zero encountered',
+  ALL: 'all',
+  TODAY: 'daily',
+  THIS_WEEK:  'weekly',
+  THIS_MONTH:  'monthly'
 }

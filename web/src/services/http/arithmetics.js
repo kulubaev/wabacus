@@ -8,7 +8,8 @@ import {
   FACTORIAL,
   CUBE_ROOT,
   SQUARE_ROOT,
-  POWER
+  POWER,
+  ALL
 }  from './constants';
 
 class Arithmetics { 
@@ -56,14 +57,12 @@ class Arithmetics {
 
   }
 
- 
-
-
   static chrono(interval, page) {
 
+    debugger;
     return new Promise((resolve, reject) => { 
       http
-        .exec(`${uri}/chrono/${interval}/${page}`)
+        .exec(`${uri}/chrono/${interval}/${!isNaN(parseInt(page) && interval !== ALL) ? page :''}`)
         .then((result) => {
           resolve(result);
         })

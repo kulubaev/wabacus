@@ -33,5 +33,5 @@ Date.prototype.getFirstDayOfWeek = function(){
 }
 
 Date.prototype.getLastDayOfWeek = function(){
-  return this.addDays(LAST_DAY -this.getDay());
+  return this.addDays(LAST_DAY - this.getDay());
 }

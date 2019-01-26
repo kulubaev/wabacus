@@ -44,52 +44,116 @@ store.query(`CREATE TABLE IF NOT EXISTS operations (
   });
 
 
+
+ const select_sql = 'SELECT *, created as date FROM operations'; 
+ const order_by_sql = 'ORDER BY id DESC';
+
+/**
+ *
+ *
+ */
 const run = (sql) => {
  return store.query(sql)
   .catch((error) => errorHandler(error));
 }
 
+/**
+ *
+ *
+ */
 const insertRow = ({data: {id, op, x, y, n ,result,  expression, success, date}}) => {
 
-  const queryTxt = 'INSERT INTO operations(uuid,  expression, operation,  result, status,  created ) VALUES($1, $2, $3, $4, $5, $6 )';
+  const queryTxt = 'INSERT INTO operations(uuid,  expression, operation,  result, status,  created ) VALUES ($1, $2, $3, $4, $5, $6 )';
 
   return store.query(queryTxt, [ id, expression, op,  result,  success ? 'success' : 'failed' ,date])
     .catch((error) => errorHandler)
 }
 
-const queryBetween = (start, end) => {
-  const sql = `SELECT * FROM operations WHERE created::date >= '${start.shorten()}' AND created::date <= '${start.shorten()}'`;
+/**
+ *
+ *
+ */
+const queryBetween = (start, end, page) => {
+
+  let sql = `${select_sql} WHERE created::date >= '${start.shorten()}' AND created::date <= '${end.shorten()}' ${order_by_sql} `;
+
+  console.log(parseInt(page));
+  console.log(isNaN(parseInt(page)))
+  console.log(sql);
+
+
+  if(!isNaN(parseInt(page))) {
+    sql = ` ${sql} limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE}`;
+  }
+
+  console.log(sql);
   return run(sql);
 }
 
-
+/**
+ *
+ *
+ */
 const queryAll = (page) => {
-  
-  const sql = `SELECT *, created as date FROM operations  ORDER BY id DESC limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE}`; 
 
+  let page_sql;
+
+  let sql = `${select_sql} ${order_by_sql}`;
+
+  console.log(parseInt(page));
+  console.log(isNaN(parseInt(page)))
+  console.log(sql);
+
+  if(!isNaN(parseInt(page))) {
+    sql = `${sql} limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE}`;
+  }
+
+  console.log(sql);
   return run(sql);
 }
 
-const queryDaily = () => {
-
+/**
+ *
+ *
+ */
+const queryDay= (page) => {
   const start = new Date();
   const end = start.addDays(1);
 
-  return queryBetween(start,end);
+  return queryBetween(start,end, page);
+}
+
+/**
+ *
+ *
+ */
+const queryWeek = (page) => {
+
+  const end = new Date();
+  const start = end.subtractDays(7);
+
+  return queryBetween(start, end, page);
 }
 
 
-const queryWeekly = () => {
+/**
+ *
+ *
+ */
+const queryMonth = (page) => {
 
-  const today = new Date();
+  const end = new Date();
+  const start = end.subtractDays(30);
 
-  return queryBetween(today.getFirstDayOfWeek(), getLastDayOfWeek());
+
+  return queryBetween(start, end, page);
 }
 
 exports.pool = store;
 exports.queryAll= queryAll;
-exports.queryDaily= queryDaily;
-exports.queryWeekly= queryWeekly;
+exports.queryDay= queryDay;
+exports.queryWeek= queryWeek;
+exports.queryMonth= queryMonth;
 exports.insertRow = insertRow;
 
 

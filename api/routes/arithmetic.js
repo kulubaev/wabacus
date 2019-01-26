@@ -1,7 +1,7 @@
 const express = require('express');
 const uuid = require('uuid/v4');
 const { pipeline, cache, zmq }  = require('../messaging/zmq');
-const { constants } = require('megasoft-shared');
+const { constants, utils } = require('megasoft-shared');
 
 const {
   PRODUCT,
@@ -56,7 +56,7 @@ api.get(/^\/factorial\/(\d+)$/, (req, res) => {
   pipeline.send(payload);
 });
 
-api.get(/^\/(factorial|cbrt|sqrt)\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?)$/, (req, res) => {
+api.get(/^\/(cbrt|sqrt)\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?)$/, (req, res) => {
 
   const id = uuid();
   const payload = {id, x: req.params[1]};
