@@ -1,4 +1,4 @@
-export const uri = 'http://localhost:3000';
+export const uri = 'http://localhost:3000/api';
 
  export const  PRODUCT = 'multiply';
  export const  DIVIDE = 'divide';

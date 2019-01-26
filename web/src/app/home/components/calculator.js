@@ -34,7 +34,7 @@ class Calculator extends Component {
     e.preventDefault();
     const operator = e.target.value;
 
-    const { infix, Calculate, OverrideLast } = this.props;
+    const { infix, Calculate } = this.props;
 
     if(isLastOperand(infix)) {
       Calculate(operator);
