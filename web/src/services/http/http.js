@@ -7,7 +7,6 @@ class Http {
     } catch (error) {
       /*eslint-disable no-console*/
       console.error(error);
-      throw error;
     }
   }
 }

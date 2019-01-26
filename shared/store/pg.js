@@ -51,9 +51,9 @@ const run = (sql) => {
 
 const insertRow = ({data: {id, op, x, y, n ,result,  expression, success, date}}) => {
 
-  const queryTxt = 'INSERT INTO operations(uuid,  expression, operation,  result, status,  created ) VALUES($1, $2, $3, $4, $5 )';
+  const queryTxt = 'INSERT INTO operations(uuid,  expression, operation,  result, status,  created ) VALUES($1, $2, $3, $4, $5, $6 )';
 
-  return store.query(queryTxt, [ uuid, expression, op,  result,  success ? 'success' : 'failed' ,date])
+  return store.query(queryTxt, [ id, expression, op,  result,  success ? 'success' : 'failed' ,date])
     .catch((error) => errorHandler)
 }
 
@@ -65,7 +65,7 @@ const queryBetween = (start, end) => {
 
 const queryAll = (page) => {
   
-  const sql = `SELECT *, created as date FROM operations limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE} ORDER BY id DESC`; 
+  const sql = `SELECT *, created as date FROM operations  ORDER BY id DESC limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE}`; 
 
   return run(sql);
 }
