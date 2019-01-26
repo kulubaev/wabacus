@@ -1,44 +1,49 @@
 const express = require('express');
 
 const { pipeline }  = require('../messaging/zmq');
-const { config, store }  = require('megasoft-shared');
+const { config, constants, store }  = require('megasoft-shared');
 
+const {
+  ALL,
+  TODAY,
+  THIS_WEEK,
+  THIS_MONTH
+} = constants;
 
 const api = express.Router();
 const { pg:db } = store;
 
-api.get(/\/all\/(\d+)$/, async(req, res) =>  { 
-  console.log(req.params[0])
-  const all =  await db.queryAll(req.params[0]);
-  res.status(200).send(all.rows);
+api.get(/\/(all|daily|weekly|monthly)\/(\d+$)?/, async(req, res) =>  { 
 
-})
+  let result = [];
 
+  console.log(req.params);
 
-api.get('/daily', async(req, res) => {
+  switch(req.params[0]) {
 
-  const daily =  await db.queryDaily();
-  res.status(200).send(daily.rows);
+    case ALL:
+      result =  await db.queryAll(req.params[1]);
+      break;
+    case TODAY:
+      result =  await db.queryDay(req.params[1]);
+      break;
+    case THIS_WEEK:
+      result =  await db.queryWeek(req.params[1]);
+      break;
+    case THIS_MONTH:
+      result =  await db.queryMonth(req.params[1]);
+      break;
+    default:
+      break;
+  }
 
-})
+  if(result && result.rows) {
+    result.rows.forEach(r => r.date = new Date(r.date).shorten());
+    res.status(200).send(result.rows);
+  }else {
+    res.status(500).send('something went wrong');
+  }
 
-api.get('/weekly', async(req, res) => {
-
-  const weekly =  await db.queryWeekly();
-  res.status(200).send(weekly.rows);
-
-})
-
-api.post('/query', async(req, res) => {
-
-  const { 
-    startdate,
-    endate,
-    type,
-    status
-  } = req.body;
-
-  res.status(200).send(all.rows);
 })
 
 

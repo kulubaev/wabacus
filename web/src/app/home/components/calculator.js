@@ -8,17 +8,11 @@ import {
   lastOperand,
   operands
 } from '../utilities/operators';
-import * as actions from '../store/actions'; 
 
+import * as actions from '../store/actions'; 
 import './styles/calculator.scss';
 
 class Calculator extends Component {
-
-
-  componentDidMount( ) {
-    this.props.loadHistory('all', {page:0});
-  }
-
 
   handleClear = (e) => {
     e.preventDefault();
