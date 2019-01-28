@@ -109,10 +109,16 @@
     line-height: 20px;
     vertical-align: middle;
     text-align: center;
-    background-color: #FEC726;
+    border: 1px solid #FEC726;
     font-size: 80%;
     cursor: pointer;
+    &:hover {
+      background-color: #FEC726;
+
+    }
   }
+
+
 
   &-export-btn {
     display: flex;

@@ -24,7 +24,17 @@ after_success:
   - docker push shnoby/calcul-worker
   - docker push shnoby/calcul-api
 
-
-
+deploy:
+  provider: elasticbeanstalk
+  regiaon: us-east-2
+  app: webcal
+  env: multi-container-docker
+  bucket_name: elasticbeanstalk-us-east-2-776337811758
+  bucket_path: multi-container
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KE
+  secret_access:
+    secure: $AWS_SECRET_KEY
 
 
