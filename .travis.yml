@@ -16,15 +16,25 @@ after_success:
   - docker build -t shnoby/calcul-nginx ./nginx
   - docker build -t shnoby/calcul-worker ./core
   - docker build -t shnoby/calcul-api ./api
-  #login to docker hub
+    #  #login to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  #push to the docker hub
+    #  #push to the docker hub
   - docker push shnoby/calcul-web
   - docker push shnoby/calcul-nginx
   - docker push shnoby/calcul-worker
   - docker push shnoby/calcul-api
-
-
-
+    #
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: webcal
+  env: multi-container-env
+  bucket_name: elasticbeanstalk-us-east-2-776337811758
+  bucket_path: multi-container
+  on:
+    branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+      secure: $AWS_SECRET_KEY
 
 

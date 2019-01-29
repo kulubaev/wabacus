@@ -43,14 +43,15 @@ footer {
   background-color: $green;
   grid-area: footer;
   text-align: center;
-  padding: 0 50px;
-	line-height:25px;;
   font-size: 65%;
 	vertical-align:middle;
   margin-top: 5px;
-	height:25px;
+	height:30px;
 	background-color:$lightgray;
   font-family: Verdana, Arial, Helvetica;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 

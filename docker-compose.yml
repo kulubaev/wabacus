@@ -25,8 +25,8 @@ services:
       - /app/node_modules
       - ./core:/app
     environment:
-      - MQHOST=tcp://*
-      - MQPORT=5000
+      - MQWHOST=tcp://*
+      - MQWPORT=5000
   web:
     build:
       dockerfile: Dockerfile-dev

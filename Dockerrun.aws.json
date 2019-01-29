@@ -4,7 +4,7 @@
     {
       "name": "web",
       "image": "shnoby/calcul-web",
-      "hostname": "web",
+      "hostname": "client",
       "essential": false,
       "memory": 128
     },
@@ -13,15 +13,14 @@
       "image": "shnoby/calcul-api",
       "hostname": "api",
       "essential": false,
-      "links": ["worker"],
       "memory": 128
+
     },
     {
       "name": "worker",
       "image": "shnoby/calcul-worker",
       "hostname": "worker",
       "essential": false,
-      "links": ["api"],
       "memory": 128
     },
     {
@@ -39,5 +38,4 @@
       "memory": 128
     }
   ]
-
 }

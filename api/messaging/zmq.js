@@ -17,7 +17,6 @@ const { pool } = store;
 const channel = zmq.socket('req');
 channel.connect(`${zmqHost}:${zmqPort}`);
 
-
 const pipeline = new Pipeline(channel);
 const cache = new WeakMap();
 

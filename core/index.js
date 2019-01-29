@@ -2,7 +2,7 @@
 const zmq = require('zeromq');
 
 const { Pipeline, jsonMiddleware, config, constants, utils }  = require('megasoft-shared');
-const { zmqPort, zmqHost } = config;
+const { zmqWPort, zmqWHost } = config;
 const { txtmanage } = utils;
 /**
  *@description importing arithmetic operation related constants
@@ -65,7 +65,7 @@ const  subscription  = cache.duplicate();
 */
 
 const channel = zmq.socket('rep');
-channel.bind(`${zmqHost}:${zmqPort}`);
+channel.bind(`${zmqWHost}:${zmqWPort}`);
 
 const pipeline = new Pipeline(channel);
 pipeline.use(jsonMiddleware());

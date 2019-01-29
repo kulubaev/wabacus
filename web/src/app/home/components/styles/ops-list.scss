@@ -109,9 +109,35 @@
     line-height: 20px;
     vertical-align: middle;
     text-align: center;
-    background-color: #FEC726;
+    border: 1px solid #FEC726;
     font-size: 80%;
     cursor: pointer;
+    &:hover {
+      background-color: #FEC726;
+
+    }
+  }
+
+
+
+  &-export-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:1.3rem;
+    font-size: 0.7rem; 
+    font-weight: bold;
+    button {
+      outline: none;
+      border: none;
+      height: 100%;
+      width: 20px;
+      display: flex;
+      padding: 0;
+      margin-right: 10px;
+      svg {
+      }
+    }
   }
 
   &-export-btn {
