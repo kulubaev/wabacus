@@ -1,10 +1,11 @@
 {
-  "name": "megasoft-shared",
+  "name": "wabacus",
   "version": " 0.0.1",
   "author": "kulubaev",
   "dependencies": {
     "jest": "^23.6.0",
-    "pg": "^7.7.1"
+    "pg": "^7.7.1",
+    "zeromq": "*"
   },
   "devDependencies": {},
   "scripts": {

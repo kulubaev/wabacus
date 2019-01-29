@@ -1,15 +1,14 @@
 
 const zmq = require('zeromq');
 
-const { 
-  Pipeline, 
-  store,
-  jsonMiddleware, 
-  routeMiddleware,
-  persistMiddleware ,
-  config } = require('megasoft-shared');
+const Pipeline = require('../middleware');
+const jsonMiddleware = require('../middleware/json');
+const routeMiddleware = require('../middleware/route');
 
-console.log(persistMiddleware);
+const store = require('../store');
+const persistMiddleware = require('../middleware/persist');
+
+const config = require('../static/.env');
 
 const { zmqPort, zmqHost } = config;
 const { pool } = store;

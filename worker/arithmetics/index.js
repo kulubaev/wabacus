@@ -4,7 +4,7 @@ const {
   DIVIDE,
   PRODUCT,
   DIVISION_BY_ZERO_ENCOUNTERED
-} = require('megasoft-shared');
+} = ('../static/constants');
 
 /**
  *@description routine defintions for basic/primary calculations

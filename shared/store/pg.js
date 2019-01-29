@@ -1,6 +1,6 @@
 
-const config = require('../.env');
-const constants = require('../constants');
+const config = require('../static/.env');
+const constants = require('../static/constants');
 
 const { PAGE_SIZE } = constants;
 
@@ -77,16 +77,11 @@ const queryBetween = (start, end, page) => {
 
   let sql = `${select_sql} WHERE created::date >= '${start.shorten()}' AND created::date <= '${end.shorten()}' ${order_by_sql} `;
 
-  console.log(parseInt(page));
-  console.log(isNaN(parseInt(page)))
-  console.log(sql);
-
 
   if(!isNaN(parseInt(page))) {
     sql = ` ${sql} limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE}`;
   }
 
-  console.log(sql);
   return run(sql);
 }
 
@@ -100,15 +95,10 @@ const queryAll = (page) => {
 
   let sql = `${select_sql} ${order_by_sql}`;
 
-  console.log(parseInt(page));
-  console.log(isNaN(parseInt(page)))
-  console.log(sql);
-
   if(!isNaN(parseInt(page))) {
     sql = `${sql} limit ${ PAGE_SIZE } offset ${ page * PAGE_SIZE}`;
   }
 
-  console.log(sql);
   return run(sql);
 }
 

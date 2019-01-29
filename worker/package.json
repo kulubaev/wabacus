@@ -1,8 +1,7 @@
 {
-  "name": "megasoft-core",
+  "name": "wabacus-worker",
   "author": "kulubaev",
   "dependencies": {
-    "megasoft-shared": "git+https://git@github.com/kulubaev/calcuco-shared.git",
     "zeromq": "*"
   },
   "devDependencies": {

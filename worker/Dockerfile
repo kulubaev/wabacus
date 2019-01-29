@@ -1,4 +1,5 @@
-FROM shnoby/node-zeromq 
+FROM shnoby/wabacus 
+
 WORKDIR '/app'
 
 COPY ./package.json ./
@@ -9,4 +10,3 @@ COPY . .
  
 CMD ["npm", "run", "start"]
 
-EXPOSE 5000

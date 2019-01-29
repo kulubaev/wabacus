@@ -1,10 +1,9 @@
 {
-  "name": "megasoft-api",
+  "name": "wabacus-api",
   "author": "kulubaev",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "megasoft-shared": "git+https://git@github.com/kulubaev/calcuco-shared.git",
     "pg": "^7.7.1",
     "zeromq": "*"
   },
@@ -15,7 +14,7 @@
     "nodemon": "^1.18.9"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "start-dev": "nodemon"
   }
 }
