@@ -8,7 +8,12 @@ services:
       context: ./api
     volumes:
       - /app/node_modules
+      - /app/middleware
+      - /app/store
+      - /app/utils
+      - /app/static
       - ./api:/app
+
     environment:
       - DBHOST=postgres
       - DBUSER=postgres
@@ -20,10 +25,13 @@ services:
   worker:
     build:
       dockerfile: Dockerfile-dev
-      context: ./core
+      context: ./worker
     volumes:
       - /app/node_modules
-      - ./core:/app
+      - /app/middleware
+      - /app/utils
+      - /app/static
+      - ./worker:/app
     environment:
       - MQWHOST=tcp://*
       - MQWPORT=5000

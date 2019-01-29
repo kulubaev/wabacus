@@ -6,3 +6,4 @@ exports.utils = require('./utils');
 exports.config = require('./.env');
 exports.constants = require('./constants');
 exports.store = require('./store');
+exports.zmq = require('zeromq');

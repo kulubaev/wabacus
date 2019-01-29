@@ -1,7 +1,6 @@
 const express = require('express');
 const uuid = require('uuid/v4');
 const { pipeline, cache, zmq }  = require('../messaging/zmq');
-const { constants, utils } = require('megasoft-shared');
 
 const {
   PRODUCT,
@@ -12,7 +11,7 @@ const {
   CUBE_ROOT,
   SQUARE_ROOT,
   POWER
-}  = constants;
+}  = require('../static/constants');
 
 
 const api = express.Router();
@@ -103,7 +102,6 @@ api.get(/^\/(add|divide|subtract|multiply)\/([\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?
     cache[id] = ({ error, success, result, x, y, op, expression, date }) => success ? resolve({result, num1: x, num2:y, operation:op, expression, date}) : reject(error);
   })
     .then((result) => {
-      console.log(result);
       res.status(200).json(result);
     })
     .catch((error) => {

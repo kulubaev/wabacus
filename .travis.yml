@@ -12,17 +12,17 @@ script:
 
 
 after_success:
-  - docker build -t shnoby/calcul-web ./web
-  - docker build -t shnoby/calcul-nginx ./nginx
-  - docker build -t shnoby/calcul-worker ./core
-  - docker build -t shnoby/calcul-api ./api
+  - docker build -t shnoby/wabacus-web ./web
+  - docker build -t shnoby/wabacus-nginx ./nginx
+  - docker build -t shnoby/wabacus-worker ./worker
+  - docker build -t shnoby/wabacus-api ./api
     #  #login to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     #  #push to the docker hub
-  - docker push shnoby/calcul-web
-  - docker push shnoby/calcul-nginx
-  - docker push shnoby/calcul-worker
-  - docker push shnoby/calcul-api
+  - docker push shnoby/wabacus-web
+  - docker push shnoby/wabacus-nginx
+  - docker push shnoby/wabacus-worker
+  - docker push shnoby/wabacus-api
     #
 deploy:
   provider: elasticbeanstalk

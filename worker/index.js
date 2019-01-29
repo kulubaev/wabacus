@@ -1,9 +1,12 @@
 
 const zmq = require('zeromq');
 
-const { Pipeline, jsonMiddleware, config, constants, utils }  = require('megasoft-shared');
-const { zmqWPort, zmqWHost } = config;
-const { txtmanage } = utils;
+
+const Pipeline = require('./middleware');
+const jsonMiddleware = require('./middleware/json');
+
+const { zmqPort, zmqWHost } = require('./static/.env');
+const { txtmanage } = require('./utils');
 /**
  *@description importing arithmetic operation related constants
  *
@@ -18,7 +21,7 @@ const {
   CUBE_ROOT,
   SQUARE_ROOT,
   POWER
-} = constants; 
+} = require('./static/constants'); 
 
 /**
  *@description importing arithmetic opreations
@@ -26,8 +29,6 @@ const {
  */
 
 const {
-
-
   subtract,
   product,
   divide,
@@ -65,7 +66,7 @@ const  subscription  = cache.duplicate();
 */
 
 const channel = zmq.socket('rep');
-channel.bind(`${zmqWHost}:${zmqWPort}`);
+channel.bind(`${zmqWHost}:${zmqPort}`);
 
 const pipeline = new Pipeline(channel);
 pipeline.use(jsonMiddleware());

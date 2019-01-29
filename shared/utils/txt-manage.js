@@ -7,7 +7,7 @@ const {
   CUBE_ROOT,
   SQUARE_ROOT,
   POWER
-} = require('../constants');
+} = require('../static/constants');
 
 const arithmetic_expression_build =({op, x, y, n, exp, result}) => {
   switch(op) {
@@ -15,10 +15,10 @@ const arithmetic_expression_build =({op, x, y, n, exp, result}) => {
     case DIVIDE: return `${x} / ${y}`;
     case DEDUCT: return `${x} - ${y}`;
     case PRODUCT: return `${x} * ${y}`;
-    case FACTORIAL: return `${x}!`;
-    case CUBE_ROOT: return `3√${x}`;
-    case SQUARE_ROOT: return `√${x}`;
-    case POWER: return `${x}^${n}`;
+    case FACTORIAL: return `${x} !`;
+    case CUBE_ROOT: return `3√ ${x}`;
+    case SQUARE_ROOT: return `√ ${x}`;
+    case POWER: return `${x} ^ ${n}`;
   }
 
 }

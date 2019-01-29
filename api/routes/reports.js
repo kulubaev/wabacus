@@ -1,7 +1,14 @@
 const express = require('express');
 
 const { pipeline }  = require('../messaging/zmq');
-const { config, constants, store }  = require('megasoft-shared');
+
+
+const store = require('../store');
+const config = require('../static/.env');
+const constants = require('../static/constants');
+const utils = require('../utils');
+
+
 
 const {
   ALL,
@@ -16,8 +23,6 @@ const { pg:db } = store;
 api.get(/\/(all|daily|weekly|monthly)\/(\d+$)?/, async(req, res) =>  { 
 
   let result = [];
-
-  console.log(req.params);
 
   switch(req.params[0]) {
 

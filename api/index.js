@@ -17,9 +17,7 @@ app.use("/chrono", reports);
 
 
 app.listen(4000, () => {
-
   console.log('up and running at port 4000');
-
 });
 
 
