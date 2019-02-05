@@ -13,7 +13,30 @@
       "image": "shnoby/calcul-api",
       "hostname": "api",
       "essential": false,
-      "memory": 128
+      "memory": 128,
+      "environment": [
+        {
+          "name": "MQHOST",
+          "value": "tcp://worker"
+        },
+        {
+          "name": "MQPORT",
+          "value": "5000"
+        },
+        {
+          "name": "DBPORT",
+          "value": "5432"
+        },
+        {
+          "name": "DBUSER",
+          "value": "postgres"
+        },
+        {
+          "name": "DBNAME",
+          "value": "postgres"
+        }
+      ]
+
 
     },
     {
@@ -21,7 +44,22 @@
       "image": "shnoby/calcul-worker",
       "hostname": "worker",
       "essential": false,
-      "memory": 128
+      "memory": 128,
+      "environment": [
+        {
+          "name": "MQWHOST",
+          "value": "tcp://*"
+        },
+        {
+          "name": "MQPORT",
+          "value": "5000"
+        },
+        {
+          "name": "MQPORT",
+          "value": "5000"
+        }
+
+      ]
     },
     {
       "name": "nginx",
