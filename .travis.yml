@@ -1,61 +1,36 @@
 sudo: required
-
-language: node_js
-
-node_js:
-  - 10
-
-cache:
-  directories:
-    - ~/.npm
-    - ~/.cache
-
 services: 
   - docker
 
-env:
-  global:
-    - DOCKER_COMPOSE_VERSION=1.23.2
 
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - docker-compose --version
+  - docker build -t shnoby/web-test -f ./web/Dockerfile-dev ./web
 
-before_script:
-  - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d || terminate_1; 
 
 script:
-  - docker start `docker ps -q -l` 
-  - docker attach `docker ps -q -l`
+  - docker run shnoby/web-test npm test -- --coverage
 
-after_script:
-  - docker-compose down
 
-after_success:  
-  if ["$TRAVIS_BRANCH" == "master" && "TRAVIS_PULL_REQUEST" == "false"]; then
-    docker build -t shnoby/wabacus-web ./web
-    docker build -t shnoby/wabacus-nginx ./nginx
-    docker build -t shnoby/wabacus-worker ./worker
-    docker build -t shnoby/wabacus-api ./api
+after_success:
+  - docker build -t shnoby/wabacus-web ./web
+  - docker build -t shnoby/wabacus-nginx ./nginx
+  - docker build -t shnoby/wabacus-worker ./worker
+  - docker build -t shnoby/wabacus-api ./api
     #  #login to docker hub
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     #  #push to the docker hub
-    docker push shnoby/wabacus-web
-    docker push shnoby/wabacus-nginx
-    docker push shnoby/wabacus-worker
-    docker push shnoby/wabacus-api
-  fi
-
+  - docker push shnoby/wabacus-web
+  - docker push shnoby/wabacus-nginx
+  - docker push shnoby/wabacus-worker
+  - docker push shnoby/wabacus-api
+    #
 deploy:
   provider: elasticbeanstalk
   region: us-east-2
   app: webcal
   env: multi-container-env
   bucket_name: elasticbeanstalk-us-east-2-776337811758
-  bucket_path: wabacus 
+  bucket_path: multi-container
   on:
     branch: master
     access_key_id: $AWS_ACCESS_KEY

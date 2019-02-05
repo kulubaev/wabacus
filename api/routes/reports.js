@@ -20,16 +20,6 @@ const {
 const api = express.Router();
 const { pg:db } = store;
 
-api.get('/reset', async(req, res) => {
-  try{
-    console.log(db.reset)
-    await db.reset();
-    res.status(200).send([]);
-  }catch(err) {
-    res.status(500).send('something went wrong');
-  }
-});
-
 api.get(/\/(all|daily|weekly|monthly)\/(\d+$)?/, async(req, res) =>  { 
 
   let result = [];

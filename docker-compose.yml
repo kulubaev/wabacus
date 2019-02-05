@@ -1,34 +1,19 @@
-version: '2'
+version: '3'
 services: 
   postgres:
     image: 'postgres:latest'
-  worker:
-    build:
-      context: ./worker
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - /app/middleware
-      - /app/utils
-      - /app/static
-      - ./worker:/app
-    environment:
-      - MQWHOST=tcp://*
-      - MQPORT=5000
   api:
     build:
+      dockerfile: Dockerfile-dev
       context: ./api
-      dockerfile: Dockerfile.dev
-    depends_on:
-      - postgres
-      - worker
     volumes:
       - /app/node_modules
       - /app/middleware
+      - /app/store
       - /app/utils
       - /app/static
-      - /app/store
       - ./api:/app
+
     environment:
       - DBHOST=postgres
       - DBUSER=postgres
@@ -37,23 +22,33 @@ services:
       - DBNAME=postgres
       - MQHOST=tcp://worker
       - MQPORT=5000
+  worker:
+    build:
+      dockerfile: Dockerfile-dev
+      context: ./worker
+    volumes:
+      - /app/node_modules
+      - /app/middleware
+      - /app/utils
+      - /app/static
+      - ./worker:/app
+    environment:
+      - MQWHOST=tcp://*
+      - MQWPORT=5000
   web:
     build:
+      dockerfile: Dockerfile-dev
       context: ./web
-      dockerfile: Dockerfile.dev
-    depends_on:
-      - api
-      - worker
     volumes:
       - /app/node_modules
       - ./web:/app
   nginx: 
     restart: always
     build:
+      dockerfile: Dockerfile-dev
       context: ./nginx
-    depends_on:
-      - web
-      - api
     ports: 
-      - '8080:80'
-  
+      - '3000:80'
+
+      
+

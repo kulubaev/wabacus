@@ -139,17 +139,11 @@ const queryMonth = (page) => {
   return queryBetween(start, end, page);
 }
 
-
-const reset = () => {
-  run('TRUNCATE operations');
-}
-
 exports.pool = store;
 exports.queryAll= queryAll;
 exports.queryDay= queryDay;
 exports.queryWeek= queryWeek;
 exports.queryMonth= queryMonth;
 exports.insertRow = insertRow;
-exports.reset = reset;
 
 

@@ -59,6 +59,7 @@ class Arithmetics {
 
   static chrono(interval, page) {
 
+    debugger;
     return new Promise((resolve, reject) => { 
       http
         .exec(`${uri}/chrono/${interval}/${!isNaN(parseInt(page) && interval !== ALL) ? page :''}`)

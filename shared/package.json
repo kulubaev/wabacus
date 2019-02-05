@@ -5,8 +5,7 @@
   "dependencies": {
     "jest": "^23.6.0",
     "pg": "^7.7.1",
-    "zeromq": "*",
-    "uuid": "*"
+    "zeromq": "*"
   },
   "devDependencies": {},
   "scripts": {

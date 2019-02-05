@@ -7,9 +7,6 @@ COPY ./package.json ./
 RUN  npm install 
 
 COPY . .
-
-ENV MQWHOST=tcp://*
-ENV MQPORT=5000
-
+ 
 CMD ["npm", "run", "start"]
 
