@@ -12,7 +12,7 @@ import {
 import * as actions from '../store/actions'; 
 import './styles/calculator.scss';
 
-class Calculator extends Component {
+export class Calculator extends Component {
 
   handleClear = (e) => {
     e.preventDefault();
@@ -128,10 +128,15 @@ class Calculator extends Component {
 
 Calculator.propTypes = {
   infix: PropTypes.array,
+  OverrideLast: PropTypes.func,
+  UpdateNew: PropTypes.func,
+  Calculate: PropTypes.func,
+  editing: PropTypes.bool
 }
 
 Calculator.defaultProps = {
-  infix: [0]
+  infix: [0],
+  editing: false
 }
 
 const mapToProps = (state) => {

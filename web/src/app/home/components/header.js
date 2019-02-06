@@ -7,7 +7,7 @@ const Header = () => (
     <div className="tagline">
       <div>
         <span>webcal v.0.1</span>
-        <span>{`{react,node}.js demo`}</span>
+        <span>{`stack: {react,node}.js`}</span>
       </div>
     </div>
   </header>

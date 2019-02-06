@@ -1,5 +1,5 @@
 
-FROM shnoby/wabacus-shared
+FROM shnoby/wabacus
 
 WORKDIR '/app'
 
@@ -8,8 +8,5 @@ COPY ./package.json ./
 RUN  npm install 
 
 COPY . .
-
-ENV MQWHOST=tcp://*
-ENV MQPORT=5000
 
 CMD ["npm", "run", "start-dev"]

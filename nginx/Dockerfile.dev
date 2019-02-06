@@ -1,3 +1,5 @@
 FROM nginx
+RUN apt-get update
+RUN apt-get install -y curl
 COPY ./dev/default.conf /etc/nginx/conf.d/default.conf
 

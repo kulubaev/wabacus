@@ -38,8 +38,8 @@ api.get(/^\/factorial\/(\d+)$/, (req, res) => {
   const id = uuid();
   const payload = {id, x: req.params[0], op: FACTORIAL};
 
-  if(payload.x > 30)  {
-    payload.x = 30;
+  if(payload.x > 20)  {
+    payload.x = 20;
   }
 
   new Promise((resolve, reject) => {
