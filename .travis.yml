@@ -34,26 +34,27 @@ script:
 after_script:
   - docker-compose down
 
-after_success: >
-  if ["$TRAVIS_BRANCH" == "master" && "TRAVIS_PULL_REQUEST" == "false"]; then
-    docker build -t shnoby/wabacus-web ./web
-    docker build -t shnoby/wabacus-nginx ./nginx
-    docker build -t shnoby/wabacus-worker ./worker
-    docker build -t shnoby/wabacus-api ./api
-    #  #login to docker hub
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-    #  #push to the docker hub
-    docker push shnoby/wabacus-web
-    docker push shnoby/wabacus-nginx
-    docker push shnoby/wabacus-worker
-    docker push shnoby/wabacus-api
-  fi
+after_success: 
+  - |
+    if [ $TRAVIS_BRANCH = "master" ]; then  
+      docker build -t shnoby/wabacus-web ./web
+      docker build -t shnoby/wabacus-nginx ./nginx
+      docker build -t shnoby/wabacus-worker ./worker
+      docker build -t shnoby/wabacus-api ./api
+      #login to docker hub
+      echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+      #push to the docker hub
+      docker push shnoby/wabacus-web
+      docker push shnoby/wabacus-nginx
+      docker push shnoby/wabacus-worker
+      docker push shnoby/wabacus-api
+    fi
 
 deploy:
   provider: elasticbeanstalk
   region: us-east-2
   app: webcal
-  env: multi-container-env
+  env: wabacus
   bucket_name: elasticbeanstalk-us-east-2-776337811758
   bucket_path: wabacus 
   on:

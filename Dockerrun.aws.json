@@ -3,14 +3,14 @@
   "containerDefinitions": [
     {
       "name": "web",
-      "image": "shnoby/calcul-web",
-      "hostname": "client",
+      "image": "shnoby/wabacus-web:latest",
+      "hostname": "web",
       "essential": false,
       "memory": 128
     },
     {
       "name": "api",
-      "image": "shnoby/calcul-api",
+      "image": "shnoby/wabacus-api:latest",
       "hostname": "api",
       "essential": false,
       "memory": 128,
@@ -35,13 +35,12 @@
           "name": "DBNAME",
           "value": "postgres"
         }
-      ]
-
-
+      ],
+      "links": ["worker"]
     },
     {
       "name": "worker",
-      "image": "shnoby/calcul-worker",
+      "image": "shnoby/wabacus-worker:latest",
       "hostname": "worker",
       "essential": false,
       "memory": 128,
@@ -53,17 +52,12 @@
         {
           "name": "MQPORT",
           "value": "5000"
-        },
-        {
-          "name": "MQPORT",
-          "value": "5000"
         }
-
       ]
     },
     {
       "name": "nginx",
-      "image": "shnoby/calcul-nginx",
+      "image": "shnoby/wabacus-nginx:latest",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [

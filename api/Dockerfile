@@ -17,3 +17,4 @@ ENV MQPORT=5000
 CMD ["npm","run", "start"]
 
 EXPOSE 4000
+EXPOSE 5000

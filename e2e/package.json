@@ -13,6 +13,6 @@
   },
   "scripts": {
     "wait": "wait-on http://127.0.0.1:8080",
-    "ci": "cypress run --browser chrome"
+    "ci": "wait && cypress run --browser chrome"
   }
 }
