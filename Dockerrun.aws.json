@@ -55,7 +55,7 @@
         },
         {
           "name": "MQPORT_WORKER",
-          "value": "5000"
+          "value": "6000"
         }
 
       ]
