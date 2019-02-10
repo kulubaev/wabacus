@@ -4,30 +4,25 @@ import { connect } from 'react-redux';
 
 import Header from './header';
 import Footer from './footer';
-import OpsHistory from './ops-history';
-
 import Calculator from './calculator';
-import Busy from '../../generic/components/busy';
+import History from './ops-history';
 
-import './styles/home.scss';
-import './styles/layout.scss';
+
+import './styles/index.scss';
 
 
 const Home = ({ busy }) => (
-  <div className="home">
-    <div className="grid-centered">
-      <Header />
-      <main>
-        {busy && <Busy /> }
-        <OpsHistory/>
-      </main>
-      <aside>
-        <Calculator/>
-      </aside>
-      <Footer />
-    </div>
+
+  <div className="container">
+    <Header />
+    <>
+    <main className="content"><History/> </main>
+    <aside className="sidebar"><Calculator/></aside>
+    </>
+    <Footer/>
   </div>
-);
+
+ );
 
 const mapToProps = ({ status: busy }) => {
   return {

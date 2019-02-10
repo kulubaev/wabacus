@@ -1,0 +1,28 @@
+.header {
+  &__line {
+    background-color: $color-gray-medium;
+    border: 1px solid $color-gray-dark;
+
+    grid-column: full-start / full-end;
+    grid-row: 2 / 3;
+
+    display: grid;
+    grid-template-columns: [full-start] 1fr [center-start] repeat(8,[col-start] minmax(min-content,15rem)[col-end])[center-end] 1fr[full-end];
+    align-content:center;
+
+    .heading-4:nth-child(1) {
+      grid-column: center-start / col-start 2;
+    }
+
+    .heading-4:nth-child(2) {
+      grid-column: col-end 7 / center-end;
+      justify-self: end;
+    }
+
+    @media only screen and (max-width: $bp-largest) {
+      padding: 0 2rem;
+    }
+  }
+}
+
+

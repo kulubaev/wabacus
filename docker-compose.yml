@@ -25,6 +25,8 @@ services:
       - MQWHOST=tcp://load-balancer
       - MQPORT=6000
       - MQID=worker1
+    depends_on:
+      - load-balancer
   worker2:
     build:
       context: ./worker

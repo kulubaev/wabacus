@@ -1,0 +1,29 @@
+.sidebar {
+  //background: transparent url(data:image/gif;base64,R0lGODlhCAAIAIAAAOno6P///yH5BAAAAAAALAAAAAAIAAgAAAINRG4XudroGJBRsYcxKAA7) repeat 0 0;
+  background: transparent url(../assets/bgr.gif) repeat top left;
+
+  grid-column: col-start 6 / center-end;
+  grid-row: 3 / 4;
+
+  display: grid;
+
+  @media all and (max-width: $bp-medium) {
+    grid-column: 1 / -1;
+    grid-row: 3 / 4;
+  }
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(10rem,1fr));
+  //grid-template-rows: repeat(auto-fit, minmax(max-content,1fr));
+  justify-content: center;
+  align-content: start;
+
+  @media all and (max-width: $bp-medium) {
+    box-shadow: 0 .5rem 1rem  rgba(0,0,0, .1);
+
+  }
+
+}
+
+

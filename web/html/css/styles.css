@@ -1,0 +1,220 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+  @media all and (max-width: 75em) {
+    html {
+      font-size: .85vw; } }
+  @media all and (max-width: 50em) {
+    html {
+      font-size: 45%; } }
+
+body {
+  font-family: "Nunito", sans-serif;
+  color: #333;
+  font-weight: 300;
+  line-height: 1.6; }
+
+.container {
+  display: grid;
+  grid-template-rows: 8rem 3rem 55rem  3rem;
+  grid-template-columns: [full-start] 1fr [center-start] repeat(8, [col-start] minmax(min-content, 15rem) [col-end]) [center-end] 1fr [full-end];
+  grid-row-gap: 1rem; }
+  @media all and (max-width: 50em) {
+    .container {
+      grid-template-rows: 5rem 2.5rem minmax(30rem, min-content) minmax(50rem, min-content) 2.5rem;
+      grid-template-columns: [full-start] 1fr [full-end]; } }
+  @media all and (max-width: 25em) {
+    .container {
+      grid-template-columns: [full-start] 45rem [full-end];
+      padding: 0; } }
+  @media all and (min-width: 75em) {
+    .container {
+      grid-template-columns: [full-start] 1fr [center-start] repeat(8, [col-start] minmax(min-content, 15rem) [col-end]) [center-end] 1fr [full-end];
+      grid-row-gap: 1rem; } }
+
+.heading-4 {
+  font-size: 1.3rem; }
+
+.header__line {
+  background-color: #e9e8e8;
+  border: 1px solid #ddd;
+  grid-column: full-start / full-end;
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-columns: [full-start] 1fr [center-start] repeat(8, [col-start] minmax(min-content, 15rem) [col-end]) [center-end] 1fr [full-end];
+  align-content: center; }
+  .header__line .heading-4:nth-child(1) {
+    grid-column: center-start / col-start 2; }
+  .header__line .heading-4:nth-child(2) {
+    grid-column: col-end 7 / center-end;
+    justify-self: end; }
+  @media only screen and (max-width: 75em) {
+    .header__line {
+      padding: 0 2rem; } }
+
+.sidebar {
+  background: transparent url(../assets/bgr.gif) repeat top left;
+  grid-column: col-start 6 / center-end;
+  grid-row: 3 / 4;
+  display: grid;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  justify-content: center;
+  align-content: start; }
+  @media all and (max-width: 50em) {
+    .sidebar {
+      grid-column: 1 / -1;
+      grid-row: 3 / 4; } }
+  @media all and (max-width: 50em) {
+    .sidebar {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); } }
+
+.calculator {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  justify-self: center;
+  border-radius: .5rem;
+  width: 40rem;
+  padding: 3rem 2rem;
+  display: grid;
+  grid-row-gap: 2rem;
+  grid-template-rows: 8rem 1fr; }
+  @media all and (max-width: 50em) {
+    .calculator {
+      width: 100%;
+      padding: 5rem; } }
+  .calculator__screen {
+    background-color: #fff;
+    text-align: right;
+    padding-right: 2rem;
+    padding-left: 1rem;
+    color: #333;
+    font-size: 3.2rem;
+    width: 100%;
+    grid-row: 1 / 2;
+    border: 1px solid #adadad; }
+  .calculator__keys {
+    background-color: #f8f7f7;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    padding: 1rem; }
+  .calculator__btn {
+    height: 4.5rem;
+    background-color: #fff;
+    border-radius: .3rem;
+    border: 1px solid #c4c4c4;
+    background-color: transparent;
+    font-size: 2.4rem;
+    color: #333;
+    color: #adadad;
+    background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0, 0, 0, 0.04));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 0 rgba(255, 255, 255, 0.15), 0 1px 0 0 rgba(255, 255, 255, 0.15);
+    text-shadow: 0 1px rgba(233, 233, 233, 0.9); }
+    .calculator__btn--operator {
+      color: #333; }
+    .calculator__btn--equal {
+      background-color: #efefef;
+      background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0, 0, 0, 0.04));
+      border-color: #337cac;
+      border: 1px solid #c4c4c4;
+      color: #fec726;
+      height: 100%;
+      grid-area: 5 / 5 / 7 / 3;
+      color: #333; }
+
+.content__export {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 1.3rem;
+  font-weight: bold; }
+  .content__export-btn {
+    outline: none;
+    border: none;
+    height: 100%;
+    width: 2rem;
+    display: flex;
+    padding: 0;
+    margin-right: 1rem; }
+  .content__export-interval {
+    font-size: 1.1rem; }
+
+.content__area {
+  background: #fff url(../assets/gradientBG2.jpg) repeat-y top right;
+  grid-column: center-start / col-end 5;
+  grid-row: 3 / 4;
+  font-size: 1.2rem;
+  padding: 2rem;
+  padding-right: 4rem;
+  display: grid;
+  grid-template-rows: 4rem 1fr 5rem; }
+  @media all and (max-width: 50em) {
+    .content__area {
+      grid-column: 1 / -1;
+      grid-row: 4 / 5;
+      background: #fff none; } }
+
+.content__header {
+  grid-row: 1 / 2;
+  font-size: 1.5rem;
+  background: url(../assets/arrow.gif) no-repeat left center;
+  padding-left: 2rem;
+  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dotted #FEC726; }
+  .content__header-title {
+    line-height: 2rem; }
+
+.content__body {
+  padding: 1rem 4rem; }
+
+.content__item {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); }
+
+.content__footer {
+  border-top: 1px dotted #FEC726;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: flex-end; }
+
+.pagination__page {
+  padding: 1rem; }
+
+.pagination__pager {
+  width: 5rem;
+  height: 3rem;
+  padding: .5rem;
+  display: inline-block;
+  line-height: 2rem;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px solid #FEC726;
+  cursor: pointer;
+  transition: all .3s; }
+  .pagination__pager:hover {
+    background-color: #FEC726; }
+
+.footer__line {
+  background-color: #e9e8e8;
+  border: 1px solid #ddd;
+  grid-column: full-start / full-end;
+  grid-row: 4 / 5;
+  text-align: center; }
+  @media all and (max-width: 50em) {
+    .footer__line {
+      grid-column: 1 / -1;
+      grid-row: 5 / 6; } }

@@ -1,0 +1,119 @@
+.content {
+  
+  &__export {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:1.3rem;
+    font-weight: bold;
+    &-btn {
+      outline: none;
+      border: none;
+      height: 100%;
+      width: 2rem;
+      display: flex;
+      padding: 0;
+      margin-right: 1rem;
+      svg {
+      }
+    }
+
+    &-interval {
+      font-size: 1.1rem;
+
+    }
+
+  }
+
+  &__area {
+    background:#fff url(../assets/gradientBG2.jpg)  repeat-y top right;
+    grid-column: center-start / col-end 5;
+    grid-row: 3 / 4;
+
+    font-size: 1.2rem;
+
+    padding: 2rem ;
+    padding-right: 4rem;
+
+    @media all and (max-width: $bp-medium) {
+      grid-column: 1 / -1;
+      grid-row: 4 / 5;
+      background: #fff none;
+    }
+
+    display: grid;
+    grid-template-rows: 4rem 1fr 5rem; 
+  }
+
+
+  &__header {
+    grid-row: 1 / 2;
+    font-size: 1.5rem;
+
+    background: url(../assets/arrow.gif) no-repeat left center;
+    padding-left: 2rem;
+    display: block;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dotted #FEC726;
+
+    &-title{
+      line-height: 2rem;
+
+    }
+  }
+
+  &__body {
+    padding: 1rem 4rem;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &__footer {
+    border-top: 1px dotted #FEC726;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    justify-content: flex-end;
+  }
+
+
+
+}
+
+.pagination {
+  &__page {
+    padding: 1rem;
+    
+  }
+  &__pager {
+    width: 5rem;
+    height: 3rem;
+    padding: .5rem;
+    display: inline-block;
+    line-height: 2rem;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid #FEC726;
+    cursor: pointer;
+
+    transition: all .3s;
+
+    &:hover {
+      background-color: #FEC726;
+
+    }
+
+  }
+
+
+}
+
+
+
