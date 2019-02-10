@@ -5,7 +5,7 @@ services:
   load-balancer:
     restart: always
     build: 
-      context: ./load-balancer
+      context: ./worker/load-balancer
       dockerfile: Dockerfile
     environment:
       - MQPORT_CLIENT=5000

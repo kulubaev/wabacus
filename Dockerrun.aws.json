@@ -40,7 +40,7 @@
     },
     {
       "name": "load-balancer",
-      "image": "shnoby/wabacus-loadBalancer:latest",
+      "image": "shnoby/wabacus-loadbalancer:latest",
       "hostname": "load-balancer",
       "essential": false,
       "memory": 128,
@@ -63,7 +63,7 @@
     {
       "name": "worker",
       "image": "shnoby/wabacus-worker:latest",
-      "hostname": "worker1",
+      "hostname": "worker",
       "essential": false,
       "memory": 128,
       "environment": [
@@ -81,7 +81,7 @@
     {
       "name": "worker2",
       "image": "shnoby/wabacus-worker:latest",
-      "hostname": "worker1",
+      "hostname": "worker2",
       "essential": false,
       "memory": 128,
       "environment": [
