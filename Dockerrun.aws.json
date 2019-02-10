@@ -17,7 +17,7 @@
       "environment": [
         {
           "name": "MQHOST",
-          "value": "tcp://worker"
+          "value": "tcp://load-balancer"
         },
         {
           "name": "MQPORT",
@@ -36,12 +36,12 @@
           "value": "postgres"
         }
       ],
-      "links": ["worker"]
+      "links": ["load-balancer"]
     },
     {
-      "name": "worker",
-      "image": "shnoby/wabacus-worker:latest",
-      "hostname": "worker",
+      "name": "load-balancer",
+      "image": "shnoby/wabacus-loadBalancer:latest",
+      "hostname": "load-balancer",
       "essential": false,
       "memory": 128,
       "environment": [
@@ -50,11 +50,53 @@
           "value": "tcp://*"
         },
         {
-          "name": "MQPORT",
+          "name": "MQPORT_CLIENT",
+          "value": "5000"
+        },
+        {
+          "name": "MQPORT_WORKER",
           "value": "5000"
         }
+
       ]
     },
+    {
+      "name": "worker",
+      "image": "shnoby/wabacus-worker:latest",
+      "hostname": "worker1",
+      "essential": false,
+      "memory": 128,
+      "environment": [
+        {
+          "name": "MQWHOST",
+          "value": "tcp://load-balancer"
+        },
+        {
+          "name": "MQPORT",
+          "value": "6000"
+        }
+      ],
+      "links": ["load-balancer"]
+    },
+    {
+      "name": "worker2",
+      "image": "shnoby/wabacus-worker:latest",
+      "hostname": "worker1",
+      "essential": false,
+      "memory": 128,
+      "environment": [
+        {
+          "name": "MQWHOST",
+          "value": "tcp://load-balancer"
+        },
+        {
+          "name": "MQPORT",
+          "value": "6000"
+        }
+      ],
+      "links": ["load-balancer"]
+    },
+
     {
       "name": "nginx",
       "image": "shnoby/wabacus-nginx:latest",

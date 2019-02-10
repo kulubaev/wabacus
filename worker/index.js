@@ -66,7 +66,7 @@ const  subscription  = cache.duplicate();
 */
 
 const channel = zmq.socket('rep');
-channel.bind(`${zmqWHost}:${zmqPort}`);
+channel.connect(`${zmqWHost}:${zmqPort}`);
 
 const pipeline = new Pipeline(channel);
 pipeline.use(jsonMiddleware());
@@ -79,6 +79,8 @@ pipeline.use({
      * @param {string} channel - channel name where the message emitts from
      * @param {string} message - message body 
      */
+
+    console.log(`${process.env.MQID} received message`, message);
 
     const { id, op, x } = message.data;
 
@@ -124,7 +126,6 @@ pipeline.use({
       }
 
       if(result) {
-        console.log(result);
         const { op, x, y, n } = message.data;
         const expression = txtmanage({ op, x, y, n, result });
         pipeline.send({...message.data, result , success:true, expression, date : (new Date()).shorten()});
@@ -134,23 +135,16 @@ pipeline.use({
 
 
     catch(error) {
-      console.log(error);
+      //log error
       pipeline.send({...message.data, success:false, error});
     };
 
     next();
   }
+
+
 });
 
-/**
- *@description subscribe to listen any event when a new entry will be added to redis
- *@param {strind} 'insert' - name of new value added event
- */
-/*
-subscription.subscribe(
-  SUM, 
-  DIVIDE, 
-  SUBTRACT,
-  PRODUCT
-);
-*/
+
+  process.on('SIGINT', () => channel.close());
+

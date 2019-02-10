@@ -24,6 +24,8 @@ pipeline.use(routeMiddleware(cache));
 pipeline.use(persistMiddleware(store));
 
 
+process.on('SIGINT', () => channel.close());
+
 exports.pipeline = pipeline;
 exports.cache = cache;
 exports.zmq = zmq;

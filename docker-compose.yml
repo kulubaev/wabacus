@@ -2,6 +2,15 @@ version: '2'
 services: 
   postgres:
     image: 'postgres:latest'
+  load-balancer:
+    restart: always
+    build: 
+      context: ./load-balancer
+      dockerfile: Dockerfile
+    environment:
+      - MQPORT_CLIENT=5000
+      - MQPORT_WORKER=6000
+      - MQHOST=*
   worker:
     build:
       context: ./worker
@@ -13,15 +22,32 @@ services:
       - /app/static
       - ./worker:/app
     environment:
-      - MQWHOST=tcp://*
-      - MQPORT=5000
+      - MQWHOST=tcp://load-balancer
+      - MQPORT=6000
+      - MQID=worker1
+  worker2:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - /app/middleware
+      - /app/utils
+      - /app/static
+      - ./worker:/app
+    environment:
+      - MQWHOST=tcp://load-balancer
+      - MQPORT=6000
+      - MQID=worker2
+    depends_on:
+      - load-balancer
   api:
     build:
       context: ./api
       dockerfile: Dockerfile
     depends_on:
       - postgres
-      - worker
+      - load-balancer
     volumes:
       - /app/node_modules
       - /app/middleware
@@ -35,7 +61,7 @@ services:
       - DBPASSWORD=postgres_password
       - DBPORT=5432
       - DBNAME=postgres
-      - MQHOST=tcp://worker
+      - MQHOST=tcp://load-balancer
       - MQPORT=5000
   web:
     build:
