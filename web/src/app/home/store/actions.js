@@ -107,33 +107,43 @@ export const Clear = () => (dispatch, state) => {
   })
 }
 
-export const Calculate = (op) => (dispatch, state) => {
+export const Calculate = (op) => async(dispatch, state) => {
 
-  const { home: {infix} } = state();
+  const { home: {infix, page, interval} } = state();
   const opnds = operands(infix);
   const optr = operator(infix) || op;
 
+  if (page !==0 ) {
+
+    await dispatch(loadHistory(interval, { page }));
+  }
+
   if((isBinaryOperator(optr) && opnds.length === 2) || (isUnaryOperator(optr) && opnds.length === 1)) {
 
-  api.calculate(opnds, optr)
-    .then((res) => {
-      // const payload = (isUnaryOperator(op) || op === '=') ? [result] : [ result, op ];
+    api.calculate(opnds, optr)
+      .then((res) => {
+        // const payload = (isUnaryOperator(op) || op === '=') ? [result] : [ result, op ];
 
-			const { result , operation, expression, date } = res;
+        const { result , operation, expression, date } = res;
 
-			dispatch({type: ADD_OPERATION, payload:  { date, operation, result, expression}});
+        dispatch({type: ADD_OPERATION, payload:  { date, operation, result, expression}});
 
-      if(isUnaryOperator(op) && isBinaryOperator(optr)) {
-        api.calculate([result], op)
-        .then((res) => {
-			    const { result , operation, expression, date } = res;
-          dispatch({type: RESET, payload:[result]});
-          dispatch({type: ADD_OPERATION, payload:  { date, operation, result, expression}});
-        })
-        .catch((error) => {throw error});
-      }
 
-      if(isUnaryOperator(op) && optr === op) {
+        if(isUnaryOperator(op) && isBinaryOperator(optr)) {
+
+          api.calculate([result], op)
+            .then((res) => {
+
+              const { result , operation, expression, date } = res;
+              dispatch({type: RESET, payload:[result]});
+
+              dispatch({type: ADD_OPERATION, payload:  { date, operation, result, expression}});
+
+            })
+            .catch((error) => {throw error});
+        }
+
+        if(isUnaryOperator(op) && optr === op) {
           dispatch({type: RESET, payload:[result]});
       }
 
