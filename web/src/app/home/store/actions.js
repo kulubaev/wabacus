@@ -29,26 +29,29 @@ export const loadHistory = (interval, { page }) => (dispatch, state) => {
   dispatch({type: BUSY});
   dispatch({type: SET_INTERVAL, payload: interval});
 
-  api.chrono(interval, page)
-    .then(result => {
-      const isEmpty = !(result && result.length);
+  return  new Promise((resolve, reject) => {
+    api.chrono(interval, page)
+      .then(result => {
+        const isEmpty = !(result && result.length);
 
-
-      if(!isEmpty || page === 0) {
+        if(!isEmpty || page === 0) {
+          dispatch({
+            type: LOAD_OPERATIONS_HISTORY_SUCCESS, 
+            payload: {page, operations: result}});
+        }else {
+          dispatch({
+            type: LOAD_OPERATIONS_HISTORY_FAILED, 
+          });
+        }
+        resolve();
+      })
+      .catch((error) => {
         dispatch({
-          type: LOAD_OPERATIONS_HISTORY_SUCCESS, 
-          payload: {page, operations: result}});
-			}else {
-				dispatch({
-					type: LOAD_OPERATIONS_HISTORY_FAILED, 
-				});
-			}
-		})
-    .catch((error) => {
-      dispatch({
           type: LOAD_OPERATIONS_HISTORY_FAILED, 
-			});
-		})
+        });
+        reject();
+      })
+  })
 }
 
 export const loadExportData = (interval) => (dispatch, state ) => {

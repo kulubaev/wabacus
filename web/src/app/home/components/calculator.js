@@ -17,13 +17,6 @@ import {
   operands
 } from '../utilities/operators';
 
-import {
-  BINARY_OPERATORS,
-  UNARY_OPERATORS,
-  CLEAR_OPERATORS,
-  RESULT_OPERATORS
-} from '../constants';
-
 
 export class Calculator extends Component {
 
