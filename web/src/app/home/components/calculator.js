@@ -2,32 +2,40 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { 
-  isLastBinaryOperator, 
-  isLastOperand, 
-  lastOperand,
-  operands
-} from '../utilities/operators';
-
 import * as actions from '../store/actions'; 
 import './styles/components/_calculator.scss';
 
+import { 
+  isClearOperator,
+  isResultOperator,
+  isBinaryOperator,
+  isUnaryOperator,
+  isLastBinaryOperator, 
+  isLastOperand, 
+  lastOperand,
+  isOperand,
+  operands
+} from '../utilities/operators';
+
+import {
+  BINARY_OPERATORS,
+  UNARY_OPERATORS,
+  CLEAR_OPERATORS,
+  RESULT_OPERATORS
+} from '../constants';
+
+
 export class Calculator extends Component {
 
-  handleClear = (e) => {
-    e.preventDefault();
-    this.props.Clear()
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyUp);
   }
 
-  handleResult = (e) => {
-    this.props.Calculate();
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyUp);
   }
 
-
-  handleUnaryOperator = (e) => {
-    e.preventDefault();
-    const operator = e.target.value;
-
+  handleUnaryOperator = (operator) => {
     const { infix, Calculate } = this.props;
 
     if(isLastOperand(infix)) {
@@ -35,11 +43,7 @@ export class Calculator extends Component {
     } 
   }
 
-
-  handleBinaryOperator = (e) => {
-    e.preventDefault();
-    const operator = e.target.value;
-
+  handleBinaryOperator = (operator) => {
     const { 
       infix,  
       OverrideLast, 
@@ -63,9 +67,7 @@ export class Calculator extends Component {
   }
 
 
-  handleOperand = (e) => {
-    e.preventDefault();
-    const operand = e.target.value;
+  handleOperand = (operand) => {
     const { infix,  OverrideLast, UpdateNew, editing } = this.props;
 
     if(isLastOperand(infix)) {
@@ -82,6 +84,49 @@ export class Calculator extends Component {
     }
   }
 
+
+
+  handleKeyUp = (e) => {
+    e.preventDefault();
+    this.handleEvent(e.key);
+  }
+
+  handleButtonPress = (e) => {
+    e.preventDefault();
+    this.handleEvent(e.target.value);
+  }
+
+
+  handleEvent = (value) => {
+
+    switch(true) {
+
+      case isOperand(value):
+        this.handleOperand(value);
+        break;
+
+      case isBinaryOperator(value):
+        this.handleBinaryOperator(value);
+        break;
+
+      case isUnaryOperator(value):
+        this.handleUnaryOperator(value);
+        break;
+
+      case isResultOperator(value):
+        this.props.Calculate();
+        break;
+
+       case isClearOperator(value):
+        this.props.Clear()
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
   render()  {
     const { infix } = this.props;
     const last = lastOperand(infix);
@@ -89,37 +134,38 @@ export class Calculator extends Component {
     return (
       <div className="calculator">
         <input type="text" className="calculator__screen" value={last} disabled />
-        <div className="calculator__keys">
+        <div className="calculator__keys"  onClick={this.handleButtonPress} >
+          <button type="button" className="calculator__btn operator" value="+">+</button>
+          <button type="button" className="calculator__btn operator" value="-">-</button>
+          <button type="button" className="calculator__btn operator" value="*">&times;</button>
+          <button type="button" className="calculator__btn operator" value="/">&divide;</button>
 
-          <button onClick={this.handleBinaryOperator} type="button" className="calculator__btn operator" value="+">+</button>
-          <button onClick={this.handleBinaryOperator} type="button" className="calculator__btn operator" value="-">-</button>
-          <button onClick={this.handleBinaryOperator} type="button" className="calculator__btn operator" value="*">&times;</button>
-          <button onClick={this.handleBinaryOperator} type="button" className="calculator__btn operator" value="/">&divide;</button>
+          <button type="button" value="7" className="calculator__btn" >7</button>
+          <button type="button" value="8" className="calculator__btn">8</button>
+          <button type="button" value="9" className="calculator__btn">9</button>
 
-          <button onClick={this.handleOperand} type="button" value="7" className="calculator__btn" >7</button>
-          <button onClick={this.handleOperand} type="button" value="8" className="calculator__btn">8</button>
-          <button onClick={this.handleOperand} type="button" value="9" className="calculator__btn">9</button>
-          <button onClick={this.handleUnaryOperator} type="button" className="calculator__btn operator" value="$">&radic;</button>
+          <button type="button" className="calculator__btn operator" value="cbrt">&radic;</button>
 
-          <button onClick={this.handleOperand} type="button" value="4" className="calculator__btn" >4</button>
-          <button onClick={this.handleOperand} type="button" value="5" className="calculator__btn">5</button>
-          <button onClick={this.handleOperand} type="button" value="6" className="calculator__btn">6</button>
-          <button onClick={this.handleUnaryOperator} type="button" className="calculator__btn operator" value="#">&sup3;&radic;</button>
+          <button type="button" value="4" className="calculator__btn" >4</button>
+          <button type="button" value="5" className="calculator__btn">5</button>
+          <button type="button" value="6" className="calculator__btn">6</button>
 
-          <button onClick={this.handleOperand} type="button" value="3" className="calculator__btn">3</button>
-          <button onClick={this.handleOperand} type="button" value="2" className="calculator__btn">2</button>
-          <button onClick={this.handleOperand} type="button" value="0" className="calculator__btn">0</button>
+          <button type="button" className="calculator__btn operator" value="sqrt">&sup3;&radic;</button>
 
-          <button onClick={this.handleUnaryOperator} type="button" className="calculator__btn operator" value="!">!</button>
+          <button type="button" value="3" className="calculator__btn">3</button>
+          <button type="button" value="2" className="calculator__btn">2</button>
+          <button type="button" value="0" className="calculator__btn">0</button>
 
-          <button onClick={this.handleOperand} type="button" value="1" className="calculator__btn">1</button>
+          <button type="button" className="calculator__btn operator" value="!">!</button>
 
-          <button onClick={this.handleBinaryOperator} type="button" className="calculator__btn operator" value="^">x<sup>y</sup></button>
+          <button type="button" value="1" className="calculator__btn">1</button>
 
-          <button onClick={this.handleOperand} type="button" value="." className="calculator__btn">.</button>
+          <button type="button" className="calculator__btn operator" value="^">x<sup>y</sup></button>
 
-          <button onClick={this.handleClear} type="button" className="calculator__btn all-clear" value="">clr</button>
-          <button onClick={this.handleResult}type="button" className="calculator__btn calculator__btn--equal" value="=">=</button>
+          <button type="button" value="." className="calculator__btn">.</button>
+
+          <button type="button" className="calculator__btn all-clear" value="clr">clr</button>
+          <button type="button" className="calculator__btn calculator__btn--equal" value="=">=</button>
         </div>
       </div>
     );

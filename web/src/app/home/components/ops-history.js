@@ -39,8 +39,8 @@ export class OpsHistory extends Component {
 	onIntervalChange = (e) => {
     e.preventDefault();
     const interval = e.target.value;
-    const { page, loadHistory }  = this.props;
-    loadHistory(interval, {page});
+    const { loadHistory }  = this.props;
+    loadHistory(interval, {page:0});
 	}
 
   onShuffle (e, dir) {
@@ -86,9 +86,8 @@ export class OpsHistory extends Component {
             <button
               className="content__export-btn"
               onClick={this.onExportData}>
-              <img src={icon} al="export" className="export__icon"/>
-              
-              
+
+              <img src={icon} alt="export" className="export__icon"/>
            </button>
 
             <select className="content__export-interval" onChange={this.onIntervalChange} value={interval}>

@@ -75,6 +75,8 @@ services:
     volumes:
       - /app/node_modules
       - ./web:/app
+    environment:
+      - GENERATE_SOURCEMAP=true
   nginx: 
     restart: always
     build:

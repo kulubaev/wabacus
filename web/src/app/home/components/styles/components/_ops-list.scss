@@ -74,9 +74,10 @@
   &__item {
     display: grid;
     grid-template-columns:  1fr 1fr 1fr 1fr;
+    height: 2.5rem;
 
     &--header {
-      font-weight: 400;
+      font-weight: 500;
       text-decoration: underline;
       text-transform: capitalize;
     }
@@ -95,8 +96,11 @@
 .pagination {
   &__page {
     padding: 1rem;
-
+    width: 6rem;
+    display: inline-block;
+    white-space: nowrap;
   }
+
   &__pager {
     width: 5rem;
     height: 3rem;
@@ -120,6 +124,9 @@
 .export__icon {
   transform: translateY(-.4rem);
 
+  @media all and (max-width: $bp-large) {
+    height: 2rem;
+  }
 }
 
 

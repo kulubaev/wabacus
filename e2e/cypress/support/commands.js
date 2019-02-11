@@ -48,8 +48,8 @@ Cypress.Commands.add('divide', (...operands) => cy.binary(operands, '/'));
 Cypress.Commands.add('power', (...operands) => cy.binary(operands, '^'));
 
 Cypress.Commands.add('factorial', (operand) => cy.unary('!', operand));
-Cypress.Commands.add('sqrt', (operand) => cy.unary('$', operand));
-Cypress.Commands.add('cbrt', (operand) => cy.unary('#', operand));
+Cypress.Commands.add('sqrt', (operand) => cy.unary('sqrt', operand));
+Cypress.Commands.add('cbrt', (operand) => cy.unary('cbrt', operand));
 
 Cypress.Commands.add('verify', (value) => {
   cy.get('input.calculator__screen')

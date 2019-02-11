@@ -31,10 +31,10 @@ class Arithmetics {
       case '-':
         operator = DEDUCT;
         break;
-      case '$':
+      case 'sqrt':
         operator = SQUARE_ROOT;
         break;
-      case '#':
+      case 'cbrt':
         operator = CUBE_ROOT;
         break;
       case '^':
