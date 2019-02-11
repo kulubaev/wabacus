@@ -10,7 +10,7 @@ import {
 export const isNumber = (n) => !isNaN(parseFloat(n));
 
 //export const isOperand = (op) => !(isBinaryOperator(op) || isUnaryOperator(op));
-export const isOperand = (op) => /^(\.|[0-9])+$/.test(op);
+export const isOperand = (op) => /^(\.|-?[0-9])+$/.test(op);
 
 
 export const isBinaryOperator = (op) => {

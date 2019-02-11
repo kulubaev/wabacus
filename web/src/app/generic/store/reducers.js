@@ -1,10 +1,10 @@
 import { BUSY  } from './action-types';
 
-const DEFAULT_STATE = 0;
+const DEFAULT_STATE =0;
 
 export default (state = DEFAULT_STATE, action = {}) => {
 	switch (true) {
-		case action.type === 'BUSY':
+		case action.type ===  BUSY:
 			return state + 1;
 
 		case action.type.substring(action.type.length - 6) === 'FAILED':

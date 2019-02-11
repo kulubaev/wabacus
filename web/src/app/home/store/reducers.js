@@ -33,22 +33,7 @@ const reducer = (state = DEFAULT_STATE, action = {}) => {
 
   switch (action.type) {
 
-    case action.type.substring(action.type.length - 6) === 'FAILED': {
-      const { busy } = state;
-      return { ...state, busy: busy ? busy - 1 : busy};
-    }
-
-		case action.type.substring(action.type.length - 7) === 'SUCCESS': {
-      const { busy } = state;
-			return { ...state, ...action.payload, busy: busy ? busy - 1 : busy};
-    }
-
-    case BUSY: {
-      const { busy } = state;
-      return { ...state, busy: busy + 1};
-    }
-
-    case LOAD_OPERATIONS_HISTORY_SUCCESS:
+   case LOAD_OPERATIONS_HISTORY_SUCCESS:
       return {...state, ...action.payload};
 
     case LOAD_EXPORT_DATA_SUCCESS:

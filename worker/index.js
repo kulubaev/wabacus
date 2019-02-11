@@ -80,8 +80,6 @@ pipeline.use({
      * @param {string} message - message body 
      */
 
-    console.log(`${process.env.MQID} received message`, message);
-
     const { id, op, x } = message.data;
 
     try{

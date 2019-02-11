@@ -6,9 +6,10 @@ import Header from './header';
 import Footer from './footer';
 import Calculator from './calculator';
 import History from './ops-history';
-
+import { Busy }  from '../../generic'
 
 import './styles/index.scss';
+
 
 
 const Home = ({ busy }) => (
@@ -16,6 +17,7 @@ const Home = ({ busy }) => (
   <div className="container">
     <Header />
     <>
+    {(busy && <Busy className="busy"/> || '')}
     <main className="content"><History/> </main>
     <aside className="sidebar"><Calculator/></aside>
     </>
@@ -24,10 +26,8 @@ const Home = ({ busy }) => (
 
  );
 
-const mapToProps = ({ status: busy }) => {
-  return {
+const mapToProps = ({generic: busy}) => ({
     busy
-  };
-};
+});
 
 export default connect(mapToProps)(Home);

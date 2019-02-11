@@ -47,7 +47,7 @@ export class OpsHistory extends Component {
 
     e.preventDefault();
     
-    let { page} = this.props;
+    let {interval, page} = this.props;
 
     if (dir === 'prev') {
       page = page ? page - 1 : page;
@@ -55,7 +55,7 @@ export class OpsHistory extends Component {
       page++;
     }
 
-    this.props.loadHistory('all', {page});
+    this.props.loadHistory(interval, {page});
   }
 
   render() {
