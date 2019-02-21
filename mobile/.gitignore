@@ -1,12 +1,3 @@
-
-node_modules/
-.DS_Store
-
-.tags
-.tags.temp
-.tags.lock
-
-
 node_modules/**/*
 .expo/*
 npm-debug.*
@@ -64,3 +55,4 @@ yarn-error.log
 # Bundle artifact
 
  *.jsbundle 
+
