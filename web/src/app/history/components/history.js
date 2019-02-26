@@ -1,3 +1,4 @@
+
 import React, { Component  } from 'react';
 import { connect  } from 'react-redux';
 import  PropTypes from 'prop-types';
@@ -5,7 +6,7 @@ import { CSVLink } from 'react-csv';
 
 import * as actions from '../store/actions';
 import { PAGE_SIZE } from '../constants';
-import './styles/components/_ops-list.scss';
+import './styles/history.scss';
 
 import {
   ALL,
@@ -14,11 +15,12 @@ import {
   THIS_MONTH
 } from '../constants';
 
+import { Busy }  from '../../generic';
+
 import icon from './assets/icon.svg';
 
 
-
-export class OpsHistory extends Component {
+export class History extends Component {
 
   exportLink = React.createRef();
 
@@ -59,7 +61,7 @@ export class OpsHistory extends Component {
   }
 
   render() {
-    const { list, page, exportData } = this.props;
+    const { list, page, exportData, busy } = this.props;
 
     const columns = [
       { label: 'operation', key: 'operation'},
@@ -73,10 +75,12 @@ export class OpsHistory extends Component {
 
     return (
       <>
-        <header className="content__header">
-          <h5 className="content__header-title">History</h5>
+      {(busy > 0 && <Busy className="loading"/> || '')}
+      <header className="content__header">
+          <h5 className="content__header-title">History </h5>
           <div className="content__export">
-            <CSVLink data={exportData} 
+
+           <CSVLink data={exportData} 
               filename={`${interval}_report.csv`}
               headers={columns}
               className="ops-hidden"
@@ -141,28 +145,32 @@ export class OpsHistory extends Component {
 }
 
 
-OpsHistory.propTypes = {
+History.propTypes = {
   list: PropTypes.array,
   exportData: PropTypes.array,
-  page: PropTypes.number
+  page: PropTypes.number,
+  busy: PropTypes.number
 
 
 }
 
-OpsHistory.defaultProps = {
+History.defaultProps = {
   list: [],
   exportData: [],
   page: 0,
-  interval: ALL
+  interval: ALL,
+  busy: 0,
 }
 
+const mapToProps = ({history}) => {
+  const  { operations, page, exportData, interval, busy } = history;
+  return {
+    list:operations,
+    page,
+    exportData,
+    interval,
+    busy
+  }};
 
-const mapToProps = ({home: { operations:list, page, exportData, interval }}) => ({
-  list,
-  page,
-  exportData,
-  interval
-});
-
-export default connect( mapToProps,actions)(OpsHistory);
+export default connect( mapToProps,actions)(History);
 

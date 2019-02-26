@@ -1,5 +1,10 @@
-@import '../settings/variables';
-@import '../settings/colors';
+
+$color-primary: #333;
+$bp-largest: 75em;// 1200px
+$bp-large: 62.5em;// 1140px
+$bp-medium: 50em;// 800px
+$bp-small: 25em;// 400px
+
 .calculator {
   grid-column: 1 / -1;
   grid-row: 1 / -1;
@@ -30,6 +35,7 @@
     font-size: 3.2rem;
     width: 100%;
     grid-row: 1 / 2;
+    grid-column:: 1 / -1;
 
     border: 1px solid #adadad;
 
@@ -101,4 +107,13 @@
     width: 1.5rem;
   }
 
+  }
+  
+  .calculating {
+    justify-self: start;
+    align-self: center;
+    margin-left: 2rem;
+    grid-column: 1 / -1;
+    grid-row: 1 / 2; 
+    z-index: 999;
   }

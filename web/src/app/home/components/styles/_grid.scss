@@ -1,0 +1,28 @@
+
+.container {
+  display: grid;
+
+ // grid-template-rows: 10rem 3rem min-content  2rem;
+
+   grid-template-rows: 8rem 3rem 55rem  3rem;
+   grid-template-columns: [full-start] 1fr [center-start] repeat(8,[col-start] minmax(min-content,15rem)[col-end])[center-end] 1fr[full-end];
+   grid-row-gap: 1rem;
+ 
+ 
+  @media all and (max-width: $bp-medium) {
+    grid-template-rows: 5rem 2.5rem minmax(30rem, min-content) minmax(50rem, min-content) 2.5rem;
+    grid-template-columns: [full-start] 1fr [full-end]
+  }
+
+  @media all and (max-width: $bp-small) {
+  //  grid-template-rows: minmax(5rem, 6.5vw) minmax(2.5rem, 2.5vw) 55rem  minmax(2.5rem, 2.5vw);
+
+    grid-template-columns: [full-start] 45rem [full-end];
+    padding:0;
+  }
+
+  @media all and (min-width: $bp-largest) {
+   grid-template-columns: [full-start] 1fr [center-start] repeat(8,[col-start] minmax(min-content,15rem)[col-end])[center-end] 1fr[full-end];
+   grid-row-gap: 1rem;
+  }
+}

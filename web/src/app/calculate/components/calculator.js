@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import * as actions from '../store/actions'; 
-import './styles/components/_calculator.scss';
+import './styles/calculator.scss';
 
 import { 
   isClearOperator,
@@ -15,9 +15,10 @@ import {
   lastOperand,
   isOperand,
   operands
-} from '../utilities/operators';
+} from '../utils/operators';
 
 
+import { Busy }  from '../../generic';
 export class Calculator extends Component {
 
   componentDidMount() {
@@ -121,11 +122,15 @@ export class Calculator extends Component {
 
 
   render()  {
-    const { infix } = this.props;
+    const { infix,editing, busy } = this.props;
     const last = lastOperand(infix);
 
     return (
+
+
       <div className="calculator">
+
+        {(busy && <Busy className="calculating"/> || '')}
         <input type="text" className="calculator__screen" value={last} disabled />
         <div className="calculator__keys"  onClick={this.handleButtonPress} >
           <button type="button" className="calculator__btn operator" value="+">+</button>
@@ -137,13 +142,13 @@ export class Calculator extends Component {
           <button type="button" value="8" className="calculator__btn">8</button>
           <button type="button" value="9" className="calculator__btn">9</button>
 
-          <button type="button" className="calculator__btn operator" value="cbrt">&radic;</button>
+          <button type="button" className="calculator__btn operator" value="sqrt">&radic;</button>
 
           <button type="button" value="4" className="calculator__btn" >4</button>
           <button type="button" value="5" className="calculator__btn">5</button>
           <button type="button" value="6" className="calculator__btn">6</button>
 
-          <button type="button" className="calculator__btn operator" value="sqrt">&sup3;&radic;</button>
+          <button type="button" className="calculator__btn operator" value="cbrt">&sup3;&radic;</button>
 
           <button type="button" value="3" className="calculator__btn">3</button>
           <button type="button" value="2" className="calculator__btn">2</button>
@@ -170,19 +175,24 @@ Calculator.propTypes = {
   OverrideLast: PropTypes.func,
   UpdateNew: PropTypes.func,
   Calculate: PropTypes.func,
-  editing: PropTypes.bool
+  editing: PropTypes.bool,
+  busy: PropTypes.number
 }
 
 Calculator.defaultProps = {
   infix: [0],
-  editing: false
+  editing: false,
+  busy: 0
 }
 
-const mapToProps = (state) => {
+const mapToProps = ({calculator}) => {
+  const {editing, infix, busy} = calculator;
   return {
-  editing: state.home.editing,
-  infix: state.home.infix
-}};
+    editing,
+    infix,
+    busy
+  }
+};
 
 export default connect(mapToProps, actions)(Calculator);
 

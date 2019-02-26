@@ -1,9 +1,12 @@
-@import '../settings/variables';
-@import '../settings/colors';
+
+$bp-largest: 75em;// 1200px
+$bp-large: 62.5em;// 1140px
+$bp-medium: 50em;// 800px
+$bp-small: 25em;// 400px
 
 .content {
 
-  background:#fff url(../../assets/gradientBG2.jpg)  repeat-y top right;
+  background:#fff url(../assets/gradientBG2.jpg)  repeat-y top right;
   grid-column: center-start / col-end 5;
   grid-row: 3 / 4;
 
@@ -47,12 +50,13 @@
 
 
   &__header {
+    grid-column: 1 / -1;
     grid-row: 1 / 2;
     height: 3.5rem;
     font-size: 1.5rem;
     font-weight: 400;
 
-    background: url(../../assets/arrow.gif) no-repeat left center;
+    background: url(../assets/arrow.gif) no-repeat left center;
     padding-left: 2rem;
     display: block;
 
@@ -69,6 +73,8 @@
 
   &__body {
     padding: 1rem 4rem;
+    grid-column: 1 / -1;
+    grid-row: 2 /3;
   }
 
   &__item {
@@ -128,6 +134,14 @@
   @media all and (max-width: $bp-large) {
     height: 2rem;
   }
+}
+
+
+.loading {
+  justify-self: center;
+  align-self: center;
+  grid-column: 1 / -1;
+  grid-row: 2 /3; 
 }
 
 

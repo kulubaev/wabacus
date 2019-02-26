@@ -1,9 +1,12 @@
 {
+
+  "name": "wabacus-mobile",
   "scripts": {
-    "name": "wabacus-mobile",
     "start": "react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios"
+    "ios": "react-native run-ios",
+    "tide":"lsof -ti :8081 | awk '{print $1}' | xargs kill -9 ",
+    "start:ios": "npm run tide & react-native start -- --reset-cache & react-native run-ios"
   },
   "dependencies": {
     "react": "^16.8.2",

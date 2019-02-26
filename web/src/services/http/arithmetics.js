@@ -50,8 +50,13 @@ class Arithmetics {
 
 
     return new Promise((resolve, reject) => { http
-      .exec(`${uri}/${operator}/${params.join('/')}`)
-        .then((res) => resolve(res))
+        .exec(`${uri}/${operator}/${params.join('/')}`)
+        .then((result) => {
+          // setTimeout(()=> resolve(result), 15000);
+
+          resolve(result);
+        })
+
         .catch((error) => reject(error));
     });
 
@@ -63,7 +68,8 @@ class Arithmetics {
       http
         .exec(`${uri}/chrono/${interval}/${!isNaN(parseInt(page) && interval !== ALL) ? page :''}`)
         .then((result) => {
-          resolve(result);
+          // setTimeout(()=> resolve(result), 25000);
+           resolve(result);
         })
         .catch((error) =>  reject(error))
     })

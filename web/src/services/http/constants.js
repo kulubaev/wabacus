@@ -1,3 +1,4 @@
+//export const uri = 'http://wabacus-env.cr7gmsyuth.us-east-2.elasticbeanstalk.com/api';
 export const  uri = 'api';
 export const  PRODUCT = 'multiply';
 export const  DIVIDE = 'divide';
